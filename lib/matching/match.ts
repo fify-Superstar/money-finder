@@ -3,6 +3,7 @@ import { mapAssessmentAnswers } from "./mapAnswers.ts";
 import { OPPORTUNITIES } from "./catalog.ts";
 import {
   INELIGIBLE_EXPLANATION,
+  MISMATCH_FIT,
   SCORE_WEIGHTS,
   type DimensionFits,
   type MappedAnswers,
@@ -10,6 +11,10 @@ import {
   type Opportunity,
   type OpportunityMatch,
 } from "./types.ts";
+import {
+  opportunityIdealTimeHours,
+  opportunityIncomeScore,
+} from "./v9Fields.ts";
 
 function roundScore(value: number): number {
   return Math.round(value * 10) / 10;
@@ -26,28 +31,73 @@ export function passesHardConstraints(
   );
 }
 
+export function timeFit(
+  respTime: number,
+  minTime: number,
+  idealTime: number,
+): number {
+  if (idealTime === minTime) {
+    return 1;
+  }
+  if (respTime >= idealTime) {
+    return 1;
+  }
+  return Math.max(0, (respTime - minTime) / (idealTime - minTime));
+}
+
+export function equalityFit(matched: boolean): number {
+  return matched ? 1 : MISMATCH_FIT;
+}
+
+export function riskFit(respRisk: number, oppRisk: number): number {
+  return 1 - Math.abs(respRisk - oppRisk) / 4;
+}
+
+export function techFit(respTech: number, oppTech: number): number {
+  if (respTech >= oppTech) {
+    return 1;
+  }
+  return Math.max(0, 1 - (oppTech - respTech) / 4);
+}
+
+export function incomeFit(respIncome: number, oppIncome: number): number {
+  if (respIncome <= 0) {
+    return 0;
+  }
+  if (oppIncome >= respIncome) {
+    return 1;
+  }
+  return Math.max(0, 1 - Math.abs(respIncome - oppIncome) / 4);
+}
+
+export function tieScore(score: number, catalogIndex: number): number {
+  return score + catalogIndex / 10_000;
+}
+
 export function scoreDimensionFits(
   mapped: MappedAnswers,
   opportunity: Opportunity,
 ): DimensionFits {
   const eligible = passesHardConstraints(mapped, opportunity);
-  const strongSkill = opportunity.skills.includes(mapped.skill);
-  const workStyleFit = opportunity.workingStyles.includes(mapped.workingStyle);
-  const goalFit = opportunity.goals.includes(mapped.goal);
-  const technologyFit = mapped.techComfort >= opportunity.techRequirement;
-  const incomeCompatible =
-    mapped.desiredIncomeMax >= opportunity.incomePotentialMin &&
-    mapped.desiredIncomeMin <= opportunity.incomePotentialMax;
+  const oppIncome = opportunityIncomeScore(opportunity);
+  const income = incomeFit(mapped.desiredIncomeScore, oppIncome);
 
   return {
-    budget: eligible ? 100 : 0,
-    time: eligible ? 100 : 0,
-    risk: eligible ? 100 : 0,
-    skill: strongSkill ? 100 : 0,
-    workStyle: workStyleFit ? 100 : 0,
-    goal: goalFit ? 100 : 0,
-    technology: technologyFit ? 100 : 0,
-    incomeCompatible,
+    budget: eligible ? 1 : 0,
+    time: timeFit(
+      mapped.timeHours,
+      opportunity.minTimeHours,
+      opportunityIdealTimeHours(opportunity),
+    ),
+    skill: equalityFit(opportunity.skills.includes(mapped.skill)),
+    workStyle: equalityFit(
+      opportunity.workingStyles.includes(mapped.workingStyle),
+    ),
+    goal: equalityFit(opportunity.goals.includes(mapped.goal)),
+    risk: riskFit(mapped.riskTolerance, opportunity.riskRequirement),
+    technology: techFit(mapped.techComfort, opportunity.techRequirement),
+    income,
+    incomeCompatible: oppIncome >= mapped.desiredIncomeScore,
   };
 }
 
@@ -62,36 +112,64 @@ export function weightedScore(fits: DimensionFits, eligible: boolean): number {
       fits.skill * SCORE_WEIGHTS.skill +
       fits.workStyle * SCORE_WEIGHTS.workStyle +
       fits.risk * SCORE_WEIGHTS.risk +
-      fits.goal * SCORE_WEIGHTS.goal,
+      fits.goal * SCORE_WEIGHTS.goal +
+      fits.income * SCORE_WEIGHTS.income +
+      fits.technology * SCORE_WEIGHTS.technology,
   );
 }
 
 export function buildExplanation(
   eligible: boolean,
   fits: DimensionFits,
+  details?: {
+    desiredIncomeScore: number;
+    opportunityIncomeScore: number;
+    timeHours: number;
+    minTimeHours: number;
+    budgetDollars: number;
+    minBudgetDollars: number;
+  },
 ): string {
   if (!eligible) {
     return INELIGIBLE_EXPLANATION;
   }
 
-  const parts = ["Eligible match;"];
+  const incomeAboveTarget =
+    details !== undefined
+      ? details.desiredIncomeScore > details.opportunityIncomeScore
+      : !fits.incomeCompatible;
+  const timeLimiting =
+    details !== undefined && details.timeHours < details.minTimeHours;
+  const budgetWithin =
+    details === undefined || details.budgetDollars >= details.minBudgetDollars;
 
-  if (fits.incomeCompatible) {
-    parts.push("the listed income potential is compatible with your target.");
-  }
-  if (fits.skill === 100) {
+  const parts = [
+    incomeAboveTarget
+      ? "Eligible match; your income target is above the listed opportunity potential."
+      : "Eligible match; the listed income potential is compatible with your target.",
+  ];
+
+  if (fits.skill === 1) {
     parts.push("Strong skill fit.");
   }
-  if (fits.workStyle === 100) {
+  if (fits.workStyle === 1) {
     parts.push("Work-style fit.");
   }
-  if (fits.time === 100) {
+  if (fits.time === 1) {
     parts.push("Time fit.");
+  } else if (timeLimiting) {
+    parts.push("Time is a limiting factor.");
   }
-  if (fits.technology === 100) {
+  if (fits.technology === 1) {
     parts.push("Technology fit.");
   }
-  if (fits.budget === 100) {
+  if (fits.risk === 1) {
+    parts.push("Risk fit.");
+  }
+  if (fits.goal === 1) {
+    parts.push("Goal fit.");
+  }
+  if (budgetWithin) {
     parts.push("Budget is within your stated range.");
   }
 
@@ -110,7 +188,14 @@ export function evaluateOpportunity(
     eligible,
     score: weightedScore(fits, eligible),
     rank: null,
-    explanation: buildExplanation(eligible, fits),
+    explanation: buildExplanation(eligible, fits, {
+      desiredIncomeScore: mapped.desiredIncomeScore,
+      opportunityIncomeScore: opportunityIncomeScore(opportunity),
+      timeHours: mapped.timeHours,
+      minTimeHours: opportunity.minTimeHours,
+      budgetDollars: mapped.budgetDollars,
+      minBudgetDollars: opportunity.minBudgetDollars,
+    }),
     fits,
   };
 }
@@ -123,36 +208,38 @@ export function compareMatches(
     return left.eligible ? -1 : 1;
   }
 
-  if (right.score !== left.score) {
-    return right.score - left.score;
-  }
-
-  const byName = left.opportunity.name.localeCompare(right.opportunity.name);
-  if (byName !== 0) {
-    return byName;
-  }
-
-  return left.opportunity.id.localeCompare(right.opportunity.id);
+  return right.score - left.score;
 }
 
 export function rankMatches(matches: OpportunityMatch[]): OpportunityMatch[] {
-  const ordered = [...matches].sort(compareMatches);
+  const tieScores = matches.map((match, index) =>
+    tieScore(match.score, index + 1),
+  );
 
-  let eligibleRank = 0;
-  return ordered.map((match) => {
+  return matches.map((match, index) => {
     if (!match.eligible) {
       return { ...match, rank: null };
     }
 
-    eligibleRank += 1;
-    return { ...match, rank: eligibleRank };
+    const tsc = tieScores[index] ?? 0;
+    const better = matches.reduce((count, other, otherIndex) => {
+      if (!other.eligible) {
+        return count;
+      }
+      const otherTie = tieScores[otherIndex] ?? 0;
+      return otherTie > tsc ? count + 1 : count;
+    }, 0);
+
+    return { ...match, rank: better + 1 };
   });
 }
 
 export function selectTop3(matches: OpportunityMatch[]): OpportunityMatch[] {
   return rankMatches(matches)
-    .filter((match) => match.eligible)
-    .slice(0, 3);
+    .filter(
+      (match) => match.eligible && match.rank !== null && match.rank <= 3,
+    )
+    .sort((left, right) => (left.rank ?? 0) - (right.rank ?? 0));
 }
 
 export function matchOpportunities(
@@ -190,7 +277,9 @@ export function scoreWeightsTotal(): number {
     SCORE_WEIGHTS.skill +
     SCORE_WEIGHTS.workStyle +
     SCORE_WEIGHTS.risk +
-    SCORE_WEIGHTS.goal
+    SCORE_WEIGHTS.goal +
+    SCORE_WEIGHTS.income +
+    SCORE_WEIGHTS.technology
   );
 }
 

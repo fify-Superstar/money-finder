@@ -14,6 +14,11 @@ export type Opportunity = {
   incomePotentialMax: number;
   milestones: [string, string, string];
   actions: [string, string, string];
+  /**
+   * V9 Ideal Time (hours/week). Optional so the canonical catalog file can
+   * stay unchanged; matching restores canonical V9-01…V9-25 values when omitted.
+   */
+  idealTimeHours?: number;
 };
 
 export type MappedAnswers = {
@@ -31,6 +36,7 @@ export type MappedAnswers = {
   desiredIncomeLabel: string;
   desiredIncomeMin: number;
   desiredIncomeMax: number;
+  desiredIncomeScore: number;
   avoidances: string[];
   assets: string;
 };
@@ -43,6 +49,7 @@ export type DimensionFits = {
   risk: number;
   goal: number;
   technology: number;
+  income: number;
   incomeCompatible: boolean;
 };
 
@@ -66,13 +73,17 @@ export type MatchReport = {
 };
 
 export const SCORE_WEIGHTS = {
-  budget: 0.2,
-  time: 0.2,
-  skill: 0.2,
-  workStyle: 0.15,
-  risk: 0.1,
-  goal: 0.15,
+  budget: 15,
+  time: 15,
+  skill: 15,
+  workStyle: 10,
+  risk: 10,
+  goal: 10,
+  income: 20,
+  technology: 5,
 } as const;
+
+export const MISMATCH_FIT = 0.2;
 
 export const INELIGIBLE_EXPLANATION =
   "Not eligible: one or more hard constraints are not met.";

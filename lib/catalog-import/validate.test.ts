@@ -46,15 +46,14 @@ function shapeRow(index: number, numbers: "finite" | "nan"): Record<string, unkn
   };
 }
 
-test("production catalog stays empty and is not treated as the 25-row V9 database", () => {
-  assert.equal(OPPORTUNITIES.length, 0);
-  assert.notEqual(OPPORTUNITIES.length, CANONICAL_OPPORTUNITY_COUNT);
+test("production catalog is the loaded 25-row V9 database", () => {
+  assert.equal(OPPORTUNITIES.length, CANONICAL_OPPORTUNITY_COUNT);
 
   const result = validateCanonicalCatalog(OPPORTUNITIES);
-  assert.equal(result.ok, false);
+  assert.equal(result.ok, true);
   assert.equal(result.expectedCount, 25);
-  assert.equal(result.opportunityCount, 0);
-  assert.match(result.issues[0]?.message ?? "", /Expected exactly 25/);
+  assert.equal(result.opportunityCount, 25);
+  assert.equal(result.issues.length, 0);
 });
 
 test("a supplied catalog must contain exactly 25 opportunities", () => {
@@ -131,5 +130,5 @@ test("a supplied 25-row catalog with every required field present passes import 
     "Build a sample pack",
     "Contact local businesses",
   ]);
-  assert.equal(OPPORTUNITIES.length, 0);
+  assert.equal(OPPORTUNITIES.length, CANONICAL_OPPORTUNITY_COUNT);
 });
