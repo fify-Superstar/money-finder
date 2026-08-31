@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/layout/Container";
+import { ReferralCapture } from "@/components/share/ReferralCapture";
+import { getCustomerStartHref } from "@/lib/payment/handoff";
 
 const steps = [
   {
@@ -28,8 +30,11 @@ const outcomes = [
 ];
 
 export default function Home() {
+  const startHref = getCustomerStartHref();
+
   return (
     <div>
+      <ReferralCapture />
       <Container className="pb-16 pt-12 sm:pt-20">
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-moss">
           Personalised Money Map
@@ -44,7 +49,7 @@ export default function Home() {
           and first actions.
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Button href="/assessment" size="lg">
+          <Button href={startHref} size="lg">
             Find My Money Map
           </Button>
           <p className="text-sm text-muted sm:pl-2">
@@ -93,7 +98,7 @@ export default function Home() {
             A$19
           </p>
           <p className="mt-2 text-muted">Pay once. No subscription.</p>
-          <Button href="/assessment" fullWidth className="mt-8">
+          <Button href={startHref} fullWidth className="mt-8">
             Find My Money Map
           </Button>
           <p className="mt-5 text-sm leading-relaxed text-muted">

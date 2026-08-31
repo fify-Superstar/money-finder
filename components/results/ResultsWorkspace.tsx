@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ActionList } from "@/components/ui/ActionList";
+import { MoneyMapView } from "@/components/results/MoneyMapView";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LoadingState } from "@/components/ui/LoadingState";
-import { MilestoneList } from "@/components/ui/MilestoneList";
-import { ResultsCard } from "@/components/ui/ResultsCard";
-import { ScoreDisplay } from "@/components/ui/ScoreDisplay";
 import { readStoredAssessment } from "@/lib/assessment/persist";
 import { isCanonicalCatalogLoaded } from "@/lib/matching/catalog";
 import {
@@ -15,6 +12,7 @@ import {
   buildMoneyMapInsight,
   matchAssessment,
 } from "@/lib/matching/match";
+import { moneyMapFromMatchReport } from "@/lib/results/fromMatchReport";
 import type { MatchReport } from "@/lib/matching/types";
 
 type ResultsView =
@@ -86,45 +84,16 @@ export function ResultsWorkspace() {
     );
   }
 
-  return (
-    <div className="space-y-8">
+  const map = moneyMapFromMatchReport(view.report, view.insight);
+
+  if (map.matches.length === 0) {
+    return (
       <EmptyState
-        title="Your Money Map insight"
-        description={view.insight}
+        title="No eligible opportunities"
+        description="Every opportunity failed a hard constraint for budget, time, or risk. This is not a guarantee of income — it is a fit against the current catalog."
       />
-      {view.report.top3.length === 0 ? (
-        <EmptyState
-          title="No eligible opportunities"
-          description="Every opportunity failed a hard constraint for budget, time, or risk. This is not a guarantee of income — it is a fit against the current catalog."
-        />
-      ) : (
-        view.report.top3.map((match) => (
-          <ResultsCard
-            key={match.opportunity.id}
-            rank={match.rank ?? undefined}
-            title={match.opportunity.name}
-            explanation={match.explanation}
-          >
-            <ScoreDisplay label="Match score" score={match.score} />
-            <MilestoneList
-              heading="Milestones"
-              headingId={`${match.opportunity.id}-milestones`}
-              items={match.opportunity.milestones.map((title, index) => ({
-                id: `${match.opportunity.id}-milestone-${index + 1}`,
-                title,
-              }))}
-            />
-            <ActionList
-              heading="First actions"
-              headingId={`${match.opportunity.id}-actions`}
-              items={match.opportunity.actions.map((title, index) => ({
-                id: `${match.opportunity.id}-action-${index + 1}`,
-                title,
-              }))}
-            />
-          </ResultsCard>
-        ))
-      )}
-    </div>
-  );
+    );
+  }
+
+  return <MoneyMapView map={map} />;
 }

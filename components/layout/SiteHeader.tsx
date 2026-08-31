@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
 import { cn } from "@/lib/cn";
+import { getCustomerStartHref } from "@/lib/payment/handoff";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -13,6 +14,7 @@ const navItems = [
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const startHref = getCustomerStartHref();
 
   return (
     <header className="border-b border-line/80">
@@ -27,7 +29,7 @@ export function SiteHeader() {
             </p>
           </Link>
           <div className="sm:hidden">
-            <Button href="/assessment" size="sm">
+            <Button href={startHref} size="sm">
               Find My Money Map
             </Button>
           </div>
@@ -62,7 +64,7 @@ export function SiteHeader() {
             </ul>
           </nav>
           <div className="hidden sm:block">
-            <Button href="/assessment" size="sm">
+            <Button href={startHref} size="sm">
               Find My Money Map
             </Button>
           </div>
