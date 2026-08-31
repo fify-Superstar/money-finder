@@ -46,8 +46,9 @@ export function AssessmentReview({
           Review your answers
         </h2>
         <p className="text-muted">
-          Check these details, then submit. Matching is not run yet, so this
-          does not generate income or a Money Map on its own.
+          Check these details, then submit. We will use your answers to create
+          your personalised Money Map. You can continue to see your results.
+          Matches are not a guarantee of income.
         </p>
         <ol className="space-y-4">
           {QUESTIONS.map((question, index) => (

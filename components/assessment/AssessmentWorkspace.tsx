@@ -26,7 +26,7 @@ export function AssessmentWorkspace() {
           step={ASSESSMENT_QUESTION_COUNT}
           total={ASSESSMENT_QUESTION_COUNT}
           title="Assessment received"
-          description="Your answers are saved on this device for now. Opportunity matching is not running yet, so results remain a personalised-match placeholder — not a guarantee of income."
+          description="Your assessment is complete. Continue to see your personalised Money Map based on these answers. Matches are not a guarantee of income."
         >
           <div className="flex flex-col gap-3 sm:flex-row">
             <Button href="/results">Continue to results</Button>

@@ -74,7 +74,7 @@ export function ResultsWorkspace() {
     return (
       <EmptyState
         title={`Thanks, ${view.firstName}`}
-        description="Your completed assessment is saved on this device. The matching engine is in place, but the canonical 25-opportunity catalog has not been loaded yet, so a Top 3 Money Map cannot be generated."
+        description="Your completed assessment is saved on this device. We could not generate your Money Map right now. Please try again in a moment."
         action={
           <Button href="/assessment" variant="secondary">
             Review assessment

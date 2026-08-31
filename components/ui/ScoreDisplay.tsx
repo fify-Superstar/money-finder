@@ -15,7 +15,7 @@ export function ScoreDisplay({
     return (
       <EmptyState
         title="No match score yet"
-        description="Scores will appear here after opportunity matching is implemented."
+        description="A match score will appear here once your Money Map is ready."
       />
     );
   }
