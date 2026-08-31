@@ -1,4 +1,9 @@
 import type { AssessmentAnswers } from "../assessment/types.ts";
+import {
+  normalizeGoal,
+  normalizeSkill,
+  normalizeWorkingStyle,
+} from "./normalizeAnswers.ts";
 import type { MappedAnswers } from "./types.ts";
 
 export const TIME_UNDER_5_HOURS = "Under 5 hours";
@@ -76,13 +81,13 @@ export function mapAssessmentAnswers(answers: AssessmentAnswers): MappedAnswers 
   return {
     firstName: answers.firstName,
     email: answers.email,
-    goal: answers.goal,
+    goal: normalizeGoal(answers.goal),
     timeLabel: answers.time,
     timeHours: mapTimeHours(answers.time),
-    skill: answers.skill,
+    skill: normalizeSkill(answers.skill),
     budgetLabel: answers.budget,
     budgetDollars: mapBudgetDollars(answers.budget),
-    workingStyle: answers.workingStyle,
+    workingStyle: normalizeWorkingStyle(answers.workingStyle),
     techComfort: answers.techComfort ?? 0,
     riskTolerance: answers.riskTolerance ?? 0,
     desiredIncomeLabel: answers.desiredIncome,
