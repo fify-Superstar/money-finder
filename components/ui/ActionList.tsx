@@ -4,13 +4,14 @@ import type { DisplayListItem } from "@/components/ui/MilestoneList";
 type ActionListProps = {
   items: DisplayListItem[];
   heading?: string;
+  headingId?: string;
 };
 
 export function ActionList({
   items,
   heading = "First actions",
+  headingId = "actions-heading",
 }: ActionListProps) {
-  const headingId = "actions-heading";
 
   if (items.length === 0) {
     return (

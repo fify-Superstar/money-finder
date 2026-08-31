@@ -1,5 +1,5 @@
 import type { AssessmentState } from "./types";
-import { createInitialAssessmentState, emptyAnswers } from "./engine";
+import { createInitialAssessmentState, emptyAnswers } from "./engine.ts";
 
 export const ASSESSMENT_STORAGE_KEY = "money-finder-v10.assessment";
 

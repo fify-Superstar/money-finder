@@ -9,13 +9,14 @@ export type DisplayListItem = {
 type MilestoneListProps = {
   items: DisplayListItem[];
   heading?: string;
+  headingId?: string;
 };
 
 export function MilestoneList({
   items,
   heading = "Milestones",
+  headingId = "milestones-heading",
 }: MilestoneListProps) {
-  const headingId = "milestones-heading";
 
   if (items.length === 0) {
     return (
