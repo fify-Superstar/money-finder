@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { AssessmentWorkspace } from "@/components/assessment/AssessmentWorkspace";
+import { Container } from "@/components/layout/Container";
+import { PageHeader } from "@/components/ui/PageHeader";
 
 export const metadata: Metadata = {
   title: "Assessment — Money Finder",
@@ -9,24 +11,13 @@ export const metadata: Metadata = {
 
 export default function AssessmentPage() {
   return (
-    <section className="mx-auto w-full max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
-      <p className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-moss">
-        Coming next
-      </p>
-      <h1 className="font-display text-4xl tracking-tight text-ink sm:text-5xl">
-        Assessment
-      </h1>
-      <p className="mt-6 text-lg leading-relaxed text-muted">
-        The Money Finder assessment is not ready yet. This page is a placeholder
-        for the questions that will collect your answers, run them through the
-        matching logic, and produce your personalised Top 3 Money Map.
-      </p>
-      <Link
-        href="/"
-        className="mt-10 inline-flex items-center justify-center rounded-full border border-line bg-cream px-6 py-3 text-sm font-medium text-ink transition hover:border-moss hover:text-moss"
-      >
-        Back to Money Finder
-      </Link>
-    </section>
+    <Container className="py-12 sm:py-16">
+      <PageHeader
+        eyebrow="Money Finder"
+        title="Assessment"
+        description="Answer 12 questions to receive a personalised Top 3 Money Map. The questions themselves will be added from the validated specification — they are not included yet."
+      />
+      <AssessmentWorkspace />
+    </Container>
   );
 }

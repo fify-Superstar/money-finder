@@ -8,6 +8,13 @@ Customer-facing web app for the Money Finder assessment and personalised Top 3 M
 
 Next.js (App Router), TypeScript, Tailwind CSS.
 
+## Checks
+
+```bash
+npm test
+npm run build
+```
+
 ## Local development
 
 ```bash

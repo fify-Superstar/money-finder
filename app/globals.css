@@ -11,6 +11,9 @@
   --color-copper: #c45c26;
   --color-muted: #5a6b61;
   --color-line: #d9d0c1;
+  --color-danger: #8f2d2d;
+  --radius-pill: 999px;
+  --radius-card: 1.5rem;
 }
 
 html {
@@ -20,4 +23,18 @@ html {
 body {
   background-color: var(--color-paper);
   color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,4 +1,6 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import { Container } from "@/components/layout/Container";
 
 const steps = [
   {
@@ -28,7 +30,7 @@ const outcomes = [
 export default function Home() {
   return (
     <div>
-      <section className="mx-auto w-full max-w-5xl px-5 pb-16 pt-12 sm:px-8 sm:pt-20">
+      <Container className="pb-16 pt-12 sm:pt-20">
         <p className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-moss">
           Personalised Money Map
         </p>
@@ -42,21 +44,18 @@ export default function Home() {
           and first actions.
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Link
-            href="/assessment"
-            className="inline-flex items-center justify-center rounded-full bg-moss px-7 py-3.5 text-base font-medium text-cream transition hover:bg-moss-dark"
-          >
+          <Button href="/assessment" size="lg">
             Find My Money Map
-          </Link>
+          </Button>
           <p className="text-sm text-muted sm:pl-2">
-            <span className="font-semibold text-ink">A$19</span> one-time.
-            No subscription.
+            <span className="font-semibold text-ink">A$19</span> one-time. No
+            subscription.
           </p>
         </div>
-      </section>
+      </Container>
 
       <section className="border-y border-line/80 bg-cream/60">
-        <div className="mx-auto grid w-full max-w-5xl gap-10 px-5 py-14 sm:grid-cols-3 sm:px-8">
+        <Container className="grid gap-10 py-14 sm:grid-cols-3">
           {steps.map((step) => (
             <article key={step.number}>
               <p className="font-display text-sm text-copper">{step.number}</p>
@@ -66,10 +65,10 @@ export default function Home() {
               <p className="mt-3 leading-relaxed text-muted">{step.body}</p>
             </article>
           ))}
-        </div>
+        </Container>
       </section>
 
-      <section className="mx-auto grid w-full max-w-5xl gap-10 px-5 py-16 sm:grid-cols-[1.1fr_0.9fr] sm:px-8">
+      <Container className="grid gap-10 py-16 sm:grid-cols-[1.1fr_0.9fr]">
         <div>
           <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
             What you walk away with
@@ -86,7 +85,7 @@ export default function Home() {
             ))}
           </ul>
         </div>
-        <aside className="rounded-3xl border border-line bg-cream p-7 sm:p-8">
+        <Card as="aside">
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
             One-time price
           </p>
@@ -94,18 +93,15 @@ export default function Home() {
             A$19
           </p>
           <p className="mt-2 text-muted">Pay once. No subscription.</p>
-          <Link
-            href="/assessment"
-            className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-moss px-6 py-3.5 text-base font-medium text-cream transition hover:bg-moss-dark"
-          >
+          <Button href="/assessment" fullWidth className="mt-8">
             Find My Money Map
-          </Link>
+          </Button>
           <p className="mt-5 text-sm leading-relaxed text-muted">
             Results are personalised matches based on your answers. They are not
             a guarantee of income, work, or financial outcomes.
           </p>
-        </aside>
-      </section>
+        </Card>
+      </Container>
     </div>
   );
 }
