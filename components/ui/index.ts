@@ -10,4 +10,6 @@ export { PageHeader } from "@/components/ui/PageHeader";
 export { ProgressIndicator } from "@/components/ui/ProgressIndicator";
 export { QuestionContainer } from "@/components/ui/QuestionContainer";
 export { ResultsCard } from "@/components/ui/ResultsCard";
-export { ScoreDisplay } from "@/components/ui/ScoreDisplay";
+export { ScaleSelector } from "@/components/ui/ScaleSelector";
+export { TextArea } from "@/components/ui/TextArea";
+export { TextField } from "@/components/ui/TextField";

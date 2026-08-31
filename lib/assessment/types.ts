@@ -1,40 +1,61 @@
-export type SelectionMode = "single" | "multiple";
+export type QuestionType =
+  | "short"
+  | "email"
+  | "single"
+  | "multiple"
+  | "scale"
+  | "long";
 
-export type AnswerValue = string | string[] | null;
-
-export type QuestionOption = {
-  id: string;
-  label: string;
+export type AssessmentAnswers = {
+  firstName: string;
+  email: string;
+  goal: string;
+  time: string;
+  skill: string;
+  budget: string;
+  workingStyle: string;
+  techComfort: number | null;
+  assets: string;
+  riskTolerance: number | null;
+  avoidances: string[];
+  desiredIncome: string;
 };
 
-/**
- * A numbered slot in the 12-question assessment.
- * `prompt` and `options` stay empty until the V9 specification is loaded.
- * Do not invent final question copy here.
- */
-export type QuestionSlot = {
-  id: string;
-  index: number;
-  prompt: string | null;
-  helpText: string | null;
-  options: QuestionOption[];
-  selection: SelectionMode;
+export type QuestionDefinition = {
+  field: keyof AssessmentAnswers;
+  number: number;
+  prompt: string;
+  required: boolean;
+  type: QuestionType;
+  options?: readonly string[];
+  scaleLabel?: string;
+  scaleLowLabel?: string;
+  scaleHighLabel?: string;
+  helpText?: string;
+  autoComplete?: string;
 };
 
-export type AssessmentStatus = "unloaded" | "loading" | "ready" | "error";
+export type AssessmentStep = "questions" | "review" | "complete";
 
 export type AssessmentState = {
-  totalQuestions: number;
   currentIndex: number;
-  slots: QuestionSlot[];
-  answers: Record<string, AnswerValue>;
-  status: AssessmentStatus;
-  errorMessage: string | null;
+  step: AssessmentStep;
+  answers: AssessmentAnswers;
+  validationMessage: string | null;
+  submittedAt: string | null;
 };
 
+export type AnswerValue = string | string[] | number | null;
+
 export type AssessmentAction =
-  | { type: "next" }
+  | {
+      type: "setAnswer";
+      field: keyof AssessmentAnswers;
+      value: AssessmentAnswers[keyof AssessmentAnswers];
+    }
+  | { type: "advance" }
   | { type: "back" }
-  | { type: "goTo"; index: number }
-  | { type: "setAnswer"; questionId: string; value: AnswerValue }
-  | { type: "setStatus"; status: AssessmentStatus; errorMessage?: string | null };
+  | { type: "goToQuestion"; index: number }
+  | { type: "submit"; submittedAt: string }
+  | { type: "hydrate"; state: AssessmentState }
+  | { type: "clearValidation" };

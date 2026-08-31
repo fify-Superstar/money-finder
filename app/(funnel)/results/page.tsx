@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CompletedAssessmentNotice } from "@/components/assessment/CompletedAssessmentNotice";
 import { ActionList } from "@/components/ui/ActionList";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -22,6 +23,7 @@ export default function ResultsPage() {
         title="Your results"
         description="This is a placeholder for the Top 3 Money Map. Matching, scores, and opportunity details are not implemented yet."
       />
+      <CompletedAssessmentNotice />
       <EmptyState
         title="No Money Map yet"
         description="Complete the assessment to generate your personalised Top 3. Opportunity matching has not been added in this foundation."

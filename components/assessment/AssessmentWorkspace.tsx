@@ -1,76 +1,116 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { AssessmentReview } from "@/components/assessment/AssessmentReview";
+import { QuestionField } from "@/components/assessment/QuestionField";
 import { Button } from "@/components/ui/Button";
-import { EmptyState } from "@/components/ui/EmptyState";
-import { ErrorState } from "@/components/ui/ErrorState";
-import { LoadingState } from "@/components/ui/LoadingState";
-import { OptionSelector } from "@/components/ui/OptionSelector";
 import { ProgressIndicator } from "@/components/ui/ProgressIndicator";
 import { QuestionContainer } from "@/components/ui/QuestionContainer";
 import {
-  currentSlot,
-  questionsAreLoaded,
-  selectedOptionId,
+  ASSESSMENT_QUESTION_COUNT,
+  currentQuestion,
   useAssessment,
 } from "@/lib/assessment";
 
 export function AssessmentWorkspace() {
-  const { state, back, next } = useAssessment();
-  const slot = currentSlot(state);
-  const loaded = questionsAreLoaded(state);
-  const canGoBack = state.currentIndex > 0;
-  const canGoNext = state.currentIndex < state.totalQuestions - 1;
+  const router = useRouter();
+  const { state, setAnswer, next, back, goToQuestion, submit } =
+    useAssessment();
+  const question = currentQuestion(state);
+  const errorId = "assessment-validation-message";
+
+  if (state.step === "complete") {
+    return (
+      <div className="space-y-6">
+        <QuestionContainer
+          step={ASSESSMENT_QUESTION_COUNT}
+          total={ASSESSMENT_QUESTION_COUNT}
+          title="Assessment received"
+          description="Your answers are saved on this device for now. Opportunity matching is not running yet, so results remain a personalised-match placeholder — not a guarantee of income."
+        >
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button href="/results">Continue to results</Button>
+            <Button href="/" variant="secondary">
+              Back to home
+            </Button>
+          </div>
+        </QuestionContainer>
+      </div>
+    );
+  }
+
+  if (state.step === "review") {
+    return (
+      <div className="space-y-6">
+        <ProgressIndicator
+          value={ASSESSMENT_QUESTION_COUNT}
+          max={ASSESSMENT_QUESTION_COUNT}
+          label="Assessment progress"
+        />
+        <AssessmentReview
+          answers={state.answers}
+          onEdit={goToQuestion}
+          onBack={back}
+          onSubmit={() => {
+            submit();
+            router.push("/results");
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      <ProgressIndicator
-        value={state.currentIndex + 1}
-        max={state.totalQuestions}
-        label="Assessment progress"
-      />
-
-      {state.status === "loading" ? (
-        <LoadingState label="Loading the assessment" />
-      ) : null}
-
-      {state.status === "error" ? (
-        <ErrorState
-          message={
-            state.errorMessage ?? "The assessment could not be loaded."
-          }
-        />
-      ) : null}
-
-      {state.status === "unloaded" ? (
-        <EmptyState
-          title="Questions are not loaded yet"
-          description="This assessment can hold 12 questions and answers. The final questions will come from the Money Finder specification and are not defined in this foundation."
-        />
-      ) : null}
-
-      <QuestionContainer
-        step={slot.index + 1}
-        total={state.totalQuestions}
-        title={slot.prompt ?? "Question prompt pending"}
-        description={slot.helpText}
+      <form
+        className="space-y-6"
+        onSubmit={(event) => {
+          event.preventDefault();
+          next();
+        }}
       >
-        <OptionSelector
-          name={slot.id}
-          legend={slot.prompt ?? `Options for question ${slot.index + 1}`}
-          options={slot.options}
-          value={selectedOptionId(state.answers[slot.id] ?? null)}
-          disabled={!loaded}
+      <ProgressIndicator
+        value={question.number}
+        max={ASSESSMENT_QUESTION_COUNT}
+        label={`Question ${question.number} of ${ASSESSMENT_QUESTION_COUNT}`}
+      />
+      <QuestionContainer
+        step={question.number}
+        total={ASSESSMENT_QUESTION_COUNT}
+        title={question.prompt}
+        description={question.helpText}
+      >
+        <QuestionField
+          question={question}
+          answers={state.answers}
+          error={
+            question.type === "email" ? state.validationMessage : null
+          }
+          onChange={setAnswer}
         />
+        {state.validationMessage && question.type !== "email" ? (
+          <p id={errorId} role="alert" className="mt-4 text-sm text-danger">
+            {state.validationMessage}
+          </p>
+        ) : null}
       </QuestionContainer>
-
       <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
-        <Button variant="secondary" onClick={back} disabled={!canGoBack}>
+        <Button
+          variant="secondary"
+          type="button"
+          onClick={back}
+          disabled={state.currentIndex === 0}
+        >
           Back
         </Button>
-        <Button onClick={next} disabled={!canGoNext}>
-          Next
+        <Button
+          type="submit"
+          aria-describedby={state.validationMessage ? errorId : undefined}
+        >
+          {state.currentIndex === ASSESSMENT_QUESTION_COUNT - 1
+            ? "Review answers"
+            : "Next"}
         </Button>
       </div>
-    </div>
+      </form>
   );
 }

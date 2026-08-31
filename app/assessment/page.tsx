@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 export const metadata: Metadata = {
   title: "Assessment — Money Finder",
   description:
-    "The Money Finder assessment will collect your answers and produce a personalised Top 3 Money Map.",
+    "Answer 12 questions to receive a personalised Top 3 Money Map. Results are matches, not guaranteed income.",
 };
 
 export default function AssessmentPage() {
@@ -14,8 +14,8 @@ export default function AssessmentPage() {
     <Container className="py-12 sm:py-16">
       <PageHeader
         eyebrow="Money Finder"
-        title="Assessment"
-        description="Answer 12 questions to receive a personalised Top 3 Money Map. The questions themselves will be added from the validated specification — they are not included yet."
+        title="Your Money Map starts here"
+        description="Twelve focused questions. A$19 is a one-time payment later — no subscription. Results are personalised matches, not a guarantee of income."
       />
       <AssessmentWorkspace />
     </Container>

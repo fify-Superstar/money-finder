@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test lib/assessment/state.test.ts lib/ui/progress.test.ts"
+    "test": "node --experimental-strip-types --test lib/assessment/flow.test.ts lib/ui/progress.test.ts"
   },
   "dependencies": {
     "next": "16.3.3",
