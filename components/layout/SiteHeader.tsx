@@ -15,6 +15,10 @@ const navItems = [
 export function SiteHeader() {
   const pathname = usePathname();
   const startHref = getCustomerStartHref();
+  const onResults =
+    pathname === "/results" || pathname.startsWith("/results/");
+  const ctaHref = onResults ? "/assessment" : startHref;
+  const ctaLabel = onResults ? "Retake assessment" : "Find My Money Map";
 
   return (
     <header className="border-b border-line/80">
@@ -29,8 +33,8 @@ export function SiteHeader() {
             </p>
           </Link>
           <div className="sm:hidden">
-            <Button href={startHref} size="sm">
-              Find My Money Map
+            <Button href={ctaHref} size="sm">
+              {ctaLabel}
             </Button>
           </div>
         </div>
@@ -64,8 +68,8 @@ export function SiteHeader() {
             </ul>
           </nav>
           <div className="hidden sm:block">
-            <Button href={startHref} size="sm">
-              Find My Money Map
+            <Button href={ctaHref} size="sm">
+              {ctaLabel}
             </Button>
           </div>
         </div>

@@ -89,8 +89,13 @@ export function ResultsWorkspace() {
   if (map.matches.length === 0) {
     return (
       <EmptyState
-        title="No eligible opportunities"
-        description="Every opportunity failed a hard constraint for budget, time, or risk. This is not a guarantee of income — it is a fit against the current catalog."
+        title="No matches this time"
+        description="None of the current opportunities fit the budget, time, and risk you shared. You can review your answers and try again."
+        action={
+          <Button href="/assessment" variant="secondary">
+            Retake assessment
+          </Button>
+        }
       />
     );
   }

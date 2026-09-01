@@ -15,7 +15,7 @@ export default function ResultsPage() {
       <PageHeader
         eyebrow="Personalised Money Map"
         title="Your Money Map"
-        description="Your Top 3, why each one fits, and the first moves to make. Matches are not a guarantee of income."
+        description="Your Top 3, why each one fits, and the first moves to make."
       />
       <ResultsWorkspace />
     </Container>
