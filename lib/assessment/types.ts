@@ -58,4 +58,5 @@ export type AssessmentAction =
   | { type: "goToQuestion"; index: number }
   | { type: "submit"; submittedAt: string }
   | { type: "hydrate"; state: AssessmentState }
+  | { type: "reset" }
   | { type: "clearValidation" };

@@ -15,7 +15,13 @@ import {
   hasEnteredAnswers,
   trySubmit,
 } from "./engine";
-import { readStoredAssessment, writeStoredAssessment } from "./persist";
+import {
+  ASSESSMENT_RETAKE_PARAM,
+  isAssessmentRetakeRequest,
+  readStoredAssessment,
+  resetStoredAssessment,
+  writeStoredAssessment,
+} from "./persist";
 import type { AssessmentAnswers, AssessmentState } from "./types";
 
 type AssessmentContextValue = {
@@ -27,7 +33,7 @@ type AssessmentContextValue = {
   next: () => void;
   back: () => void;
   goToQuestion: (index: number) => void;
-  submit: () => void;
+  submit: () => boolean;
 };
 
 const AssessmentContext = createContext<AssessmentContextValue | null>(null);
@@ -46,6 +52,20 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
       return;
     }
     didHydrate.current = true;
+
+    if (isAssessmentRetakeRequest(window.location.search)) {
+      resetStoredAssessment();
+      dispatch({ type: "reset" });
+      const url = new URL(window.location.href);
+      url.searchParams.delete(ASSESSMENT_RETAKE_PARAM);
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${url.pathname}${url.search}${url.hash}`,
+      );
+      return;
+    }
+
     const stored = readStoredAssessment();
     if (stored) {
       dispatch({ type: "hydrate", state: stored });
@@ -85,6 +105,7 @@ export function AssessmentProvider({ children }: { children: ReactNode }) {
         const nextState = trySubmit(state, submittedAt);
         dispatch({ type: "submit", submittedAt });
         writeStoredAssessment(nextState);
+        return nextState.step === "complete";
       },
     }),
     [state],

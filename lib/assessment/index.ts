@@ -31,7 +31,14 @@ export {
   validateCurrentQuestion,
   validateQuestion,
 } from "./engine";
-export { ASSESSMENT_STORAGE_KEY, readStoredAssessment } from "./persist";
+export {
+  ASSESSMENT_RETAKE_HREF,
+  ASSESSMENT_RETAKE_PARAM,
+  ASSESSMENT_STORAGE_KEY,
+  isAssessmentRetakeRequest,
+  readStoredAssessment,
+  resetStoredAssessment,
+} from "./persist";
 export type {
   AnswerValue,
   AssessmentAction,

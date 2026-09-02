@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AssessmentWorkspace } from "@/components/assessment/AssessmentWorkspace";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { isPaymentLinked } from "@/lib/payment/handoff";
 
 export const metadata: Metadata = {
   title: "Assessment — Money Finder",
@@ -15,7 +16,11 @@ export default function AssessmentPage() {
       <PageHeader
         eyebrow="Money Finder"
         title="Your Money Map starts here"
-        description="Twelve focused questions. A$19 is a one-time payment later — no subscription. Results are personalised matches, not a guarantee of income."
+        description={
+          isPaymentLinked()
+            ? "Twelve focused questions. Results are personalised matches, not a guarantee of income."
+            : "Twelve focused questions. This is an unpaid private demo. Results are personalised matches, not a guarantee of income."
+        }
       />
       <AssessmentWorkspace />
     </Container>

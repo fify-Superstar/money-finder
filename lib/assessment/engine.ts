@@ -425,6 +425,8 @@ export function assessmentReducer(
         ...action.state,
         validationMessage: null,
       };
+    case "reset":
+      return createInitialAssessmentState();
     case "clearValidation":
       return { ...state, validationMessage: null };
     default:

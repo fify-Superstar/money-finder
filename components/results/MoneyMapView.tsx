@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ASSESSMENT_RETAKE_HREF } from "@/lib/assessment/persist";
 import type { MoneyMap, MoneyMapMatch, MoneyMapStep } from "@/lib/results/types";
 
 const RANK1_ACTIONS_ID = "rank-1-this-week";
@@ -159,8 +160,8 @@ function SecondaryMatch({ match }: { match: MoneyMapMatch }) {
   const headingId = `money-map-${match.id}`;
 
   return (
-    <details className="group rounded-3xl border border-line bg-cream shadow-[0_1px_0_rgba(23,36,28,0.04)]">
-      <summary className="flex cursor-pointer list-none items-start justify-between gap-4 px-6 py-5 sm:px-8 sm:py-6 [&::-webkit-details-marker]:hidden">
+    <Card as="article" className="space-y-5" aria-labelledby={headingId}>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 space-y-2">
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper">
             Rank {match.rank}
@@ -171,10 +172,8 @@ function SecondaryMatch({ match }: { match: MoneyMapMatch }) {
           >
             {match.name}
           </h3>
-          <p className="text-sm text-muted group-open:hidden">View plan</p>
-          <p className="hidden text-sm text-muted group-open:block">Hide plan</p>
         </div>
-        <p className="shrink-0 text-right">
+        <p className="shrink-0 sm:text-right">
           <span className="block text-xs font-medium uppercase tracking-[0.16em] text-muted">
             Match score
           </span>
@@ -183,26 +182,21 @@ function SecondaryMatch({ match }: { match: MoneyMapMatch }) {
             <span className="text-base text-muted"> / 100</span>
           </span>
         </p>
-      </summary>
-      <div className="space-y-5 border-t border-line/80 px-6 py-5 sm:px-8 sm:py-6">
-        <div>
-          <h4 className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
-            Why it fits
-          </h4>
-          <p className="mt-2 leading-relaxed text-muted">{match.explanation}</p>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <ThisWeekList
-            headingId={`${match.id}-actions`}
-            items={match.actions}
-          />
-          <BuildTowardList
-            headingId={`${match.id}-milestones`}
-            items={match.milestones}
-          />
-        </div>
       </div>
-    </details>
+      <div>
+        <h4 className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
+          Why it fits
+        </h4>
+        <p className="mt-2 leading-relaxed text-muted">{match.explanation}</p>
+      </div>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <ThisWeekList headingId={`${match.id}-actions`} items={match.actions} />
+        <BuildTowardList
+          headingId={`${match.id}-milestones`}
+          items={match.milestones}
+        />
+      </div>
+    </Card>
   );
 }
 
@@ -246,7 +240,7 @@ export function MoneyMapView({ map }: MoneyMapViewProps) {
         >
           Start with {rank1.name}
         </a>
-        <Button href="/assessment" variant="secondary">
+        <Button href={ASSESSMENT_RETAKE_HREF} variant="secondary">
           Retake assessment
         </Button>
       </div>

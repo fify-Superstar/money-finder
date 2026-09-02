@@ -8,7 +8,9 @@ import {
   SKILL_WRITING_AND_CONTENT,
   TIME_UNDER_5_HOURS,
   WORKING_STYLE_PEOPLE,
+  assessmentReducer,
   createInitialAssessmentState,
+  emptyAnswers,
   isValidEmail,
   setAnswer,
   tryAdvance,
@@ -166,4 +168,23 @@ test("a complete valid assessment can reach the completion state", () => {
     "I prefer interacting with people (in person or online)",
   );
   assert.equal(state.answers.desiredIncome, "$500–$1,000");
+});
+
+test("reset clears answers, completion, and submittedAt", () => {
+  let state = fillRequired(createInitialAssessmentState());
+  state = answer(state, "desiredIncome", INCOME_500_TO_1000);
+
+  for (let i = 0; i < ASSESSMENT_QUESTION_COUNT; i += 1) {
+    state = tryAdvance(state);
+  }
+
+  state = trySubmit(state, "2026-08-31T00:00:00.000Z");
+  assert.equal(state.step, "complete");
+
+  state = assessmentReducer(state, { type: "reset" });
+  assert.equal(state.step, "questions");
+  assert.equal(state.currentIndex, 0);
+  assert.equal(state.submittedAt, null);
+  assert.equal(state.validationMessage, null);
+  assert.deepEqual(state.answers, emptyAnswers());
 });

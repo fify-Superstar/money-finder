@@ -5,7 +5,10 @@ import { MoneyMapView } from "@/components/results/MoneyMapView";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { LoadingState } from "@/components/ui/LoadingState";
-import { readStoredAssessment } from "@/lib/assessment/persist";
+import {
+  ASSESSMENT_RETAKE_HREF,
+  readStoredAssessment,
+} from "@/lib/assessment/persist";
 import { isCanonicalCatalogLoaded } from "@/lib/matching/catalog";
 import {
   answersForMatching,
@@ -92,7 +95,7 @@ export function ResultsWorkspace() {
         title="No matches this time"
         description="None of the current opportunities fit the budget, time, and risk you shared. You can review your answers and try again."
         action={
-          <Button href="/assessment" variant="secondary">
+          <Button href={ASSESSMENT_RETAKE_HREF} variant="secondary">
             Retake assessment
           </Button>
         }

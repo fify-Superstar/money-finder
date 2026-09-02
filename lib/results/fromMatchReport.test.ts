@@ -108,4 +108,14 @@ test("moneyMapFromMatchReport maps Top 3 fields for the results UI", () => {
   assert.match(map.matches[0]?.explanation ?? "", /Eligible match/);
   assert.equal(map.matches[0]?.milestones[0]?.label, "Write samples");
   assert.equal(map.matches[0]?.actions[2]?.label, "Contact buyers");
+  assert.equal(map.matches[1]?.rank, 2);
+  assert.equal(map.matches[1]?.name, "Resume Writing");
+  assert.match(map.matches[1]?.explanation ?? "", /Eligible match/);
+  assert.equal(map.matches[1]?.milestones[0]?.label, "Write samples");
+  assert.equal(map.matches[1]?.actions[0]?.label, "Learn the craft");
+  assert.equal(map.matches[2]?.rank, 3);
+  assert.equal(map.matches[2]?.name, "Repurposing");
+  assert.match(map.matches[2]?.explanation ?? "", /Eligible match/);
+  assert.equal(map.matches[2]?.milestones[2]?.label, "Land a client");
+  assert.equal(map.matches[2]?.actions[2]?.label, "Contact buyers");
 });

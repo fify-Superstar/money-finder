@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AssessmentReview } from "@/components/assessment/AssessmentReview";
 import { QuestionField } from "@/components/assessment/QuestionField";
@@ -16,10 +17,13 @@ export function AssessmentWorkspace() {
   const router = useRouter();
   const { state, setAnswer, next, back, goToQuestion, submit } =
     useAssessment();
+  const [leavingForResults, setLeavingForResults] = useState(false);
   const question = currentQuestion(state);
   const errorId = "assessment-validation-message";
+  const showComplete = state.step === "complete" && !leavingForResults;
+  const showReview = state.step === "review" || leavingForResults;
 
-  if (state.step === "complete") {
+  if (showComplete) {
     return (
       <div className="space-y-6">
         <QuestionContainer
@@ -39,7 +43,7 @@ export function AssessmentWorkspace() {
     );
   }
 
-  if (state.step === "review") {
+  if (showReview) {
     return (
       <div className="space-y-6">
         <ProgressIndicator
@@ -52,7 +56,10 @@ export function AssessmentWorkspace() {
           onEdit={goToQuestion}
           onBack={back}
           onSubmit={() => {
-            submit();
+            if (!submit()) {
+              return;
+            }
+            setLeavingForResults(true);
             router.push("/results");
           }}
         />

@@ -2,6 +2,13 @@ import type { AssessmentState } from "./types";
 import { createInitialAssessmentState, emptyAnswers } from "./engine.ts";
 
 export const ASSESSMENT_STORAGE_KEY = "money-finder-v10.assessment";
+export const ASSESSMENT_RETAKE_PARAM = "retake";
+export const ASSESSMENT_RETAKE_HREF = `/assessment?${ASSESSMENT_RETAKE_PARAM}=1`;
+
+export function isAssessmentRetakeRequest(search: string): boolean {
+  const query = search.startsWith("?") ? search.slice(1) : search;
+  return new URLSearchParams(query).get(ASSESSMENT_RETAKE_PARAM) === "1";
+}
 
 type StoredAssessment = {
   version: 1;
@@ -84,4 +91,10 @@ export function writeStoredAssessment(state: AssessmentState): void {
     ASSESSMENT_STORAGE_KEY,
     serializeAssessment(state),
   );
+}
+
+export function resetStoredAssessment(): AssessmentState {
+  const fresh = createInitialAssessmentState();
+  writeStoredAssessment(fresh);
+  return fresh;
 }

@@ -4,24 +4,29 @@ Use this as a manual end-to-end pass before a real customer test. Do not treat a
 
 ## 1. Landing page
 
-- [ ] `/` loads with the Money Finder headline, A$19 one-time price, and no subscription claim.
-- [ ] Primary CTA uses `getCustomerStartHref()` (assessment today; Stripe Payment Link later).
-- [ ] Income-disclaimer copy is visible.
-- [ ] Mobile: hero, steps, and price card stack without overflow.
+- [ ] `/` loads a full product landing page (hero, how it works, what you get, who it is for, example map, expectations, FAQ, final CTA).
+- [ ] Unpaid-demo / pre-launch copy appears when checkout is not live — no A$19 or pay-once claim.
+- [ ] Primary CTA uses `getCustomerStartHref()` (assessment in demo mode, Payment Link when configured).
+- [ ] “Ranked fits… not a promise of income” is visible.
+- [ ] Privacy and Terms pages are linked from the footer.
+- [ ] Mobile (~390px): sections stack without horizontal overflow.
 
 ## 2. Payment handoff
 
-- [ ] Stripe Payment Link is **not** connected (`paymentLinkUrl` is `null`).
-- [ ] Intended live path: Landing → Payment Link → `/success` → `/assessment` → `/results`.
-- [ ] `/success` points people to the assessment, not a fake paid Money Map.
+- [ ] Without `STRIPE_PAYMENT_LINK_URL`, demo mode stays open and `/success` is not a receipt.
+- [ ] Intended live path: Landing → Payment Link → `/success?session_id=…` → server verifies Stripe → signed cookie → `/assessment` → `/results`.
+- [ ] `/success` only says **Payment confirmed** after Stripe `status=complete` and `payment_status=paid`.
+- [ ] Unpaid, malformed, or missing sessions do not receive a cookie and do not continue to the assessment.
+- [ ] `/assessment` and `/results` are gated by the signed cookie when a Payment Link is configured.
 - [ ] Cancel/return path remains `/`.
-- [ ] No secret keys, webhooks, or Stripe SDK calls are in the app.
+- [ ] Secret keys stay in env, not in source. Webhook verifies `Stripe-Signature` and does not grant browser access.
 
 ## 3. Assessment
 
 - [ ] `/assessment` is the canonical questionnaire (not duplicated under the funnel group).
 - [ ] Questions run one at a time with Back / Next.
 - [ ] Submit still routes to `/results` without using `useAssessment()` on results.
+- [ ] Retake assessment uses `/assessment?retake=1`, clears the saved assessment, and starts at Question 1.
 
 ## 4. Validation
 
@@ -38,7 +43,7 @@ Use this as a manual end-to-end pass before a real customer test. Do not treat a
 ## 6. Submission
 
 - [ ] Submit marks `step === "complete"` and writes `sessionStorage`.
-- [ ] Browser lands on `/results`.
+- [ ] Browser lands on `/results` without pausing on the Assessment received screen.
 
 ## 7. Matching
 
@@ -81,9 +86,13 @@ Use this as a manual end-to-end pass before a real customer test. Do not treat a
 
 ## Current blockers for a real customer test
 
-1. **Canonical opportunity catalog missing.** The 25 validated V9 rows are not in the workspace. Matching cannot produce a real Top 3 (including R007) until those rows are supplied. Do not fabricate them.
-2. **Stripe Payment Link not connected.** Anyone can open `/assessment` without paying. Do not run a paid customer test until checkout is wired.
-3. **Payment access is not enforced.** `PaymentAccessRecord` exists as an interface only; assessment is not gated.
-4. **Share / referral is a placeholder.** No share IDs, no attribution database, no live invite links.
-5. **R007 regression cannot run** against the empty catalog.
-6. **No production deploy** in this batch (by design).
+1. **Stripe Dashboard (TEST mode).** Still required outside this repo — do not invent them:
+   - Create a TEST Payment Link and set its success URL to `http://localhost:3010/success?session_id={CHECKOUT_SESSION_ID}`.
+   - Put the Payment Link URL in `STRIPE_PAYMENT_LINK_URL`.
+   - Put the TEST secret key (`sk_test_...`) in `STRIPE_SECRET_KEY`.
+   - Create a webhook (Dashboard or `stripe listen --forward-to http://localhost:3010/api/stripe/webhook`) and put `whsec_...` in `STRIPE_WEBHOOK_SECRET`.
+   - `PAYMENT_ACCESS_SECRET` is generated locally in `.env.local` and must stay gitignored.
+2. **Durable delivery.** The Money Map still lives in `sessionStorage`. Payment access does not email or store results.
+3. **Share / referral is a placeholder.** No share IDs, no attribution database, no live invite links.
+4. **No production deploy** of this payment boundary yet.
+5. **Pricing copy.** Do not restore A$19 / “Pay once” until a real Stripe TEST payment has been verified end-to-end.
