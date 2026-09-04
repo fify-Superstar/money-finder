@@ -7,6 +7,23 @@ import type { MoneyMap, MoneyMapMatch, MoneyMapStep } from "@/lib/results/types"
 
 const RANK1_ACTIONS_ID = "rank-1-this-week";
 
+const INCOME_ABOVE_TARGET_EXPLANATION =
+  "Eligible match; your income target is above the listed opportunity potential.";
+const INCOME_COMPATIBLE_EXPLANATION =
+  "Eligible match; the listed income potential is compatible with your target.";
+
+function customerFacingExplanation(explanation: string): string {
+  return explanation
+    .replaceAll(
+      INCOME_ABOVE_TARGET_EXPLANATION,
+      "The extra income you wanted is higher than this opportunity's listed range.",
+    )
+    .replaceAll(
+      INCOME_COMPATIBLE_EXPLANATION,
+      "This opportunity's listed income range is in line with the extra income you wanted.",
+    );
+}
+
 function ThisWeekList({
   items,
   headingId,
@@ -138,7 +155,9 @@ function Rank1Hero({
         <h3 className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
           Why it fits
         </h3>
-        <p className="mt-2 leading-relaxed text-muted">{match.explanation}</p>
+        <p className="mt-2 leading-relaxed text-muted">
+          {customerFacingExplanation(match.explanation)}
+        </p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -187,7 +206,9 @@ function SecondaryMatch({ match }: { match: MoneyMapMatch }) {
         <h4 className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
           Why it fits
         </h4>
-        <p className="mt-2 leading-relaxed text-muted">{match.explanation}</p>
+        <p className="mt-2 leading-relaxed text-muted">
+          {customerFacingExplanation(match.explanation)}
+        </p>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <ThisWeekList headingId={`${match.id}-actions`} items={match.actions} />
