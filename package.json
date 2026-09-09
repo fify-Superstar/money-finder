@@ -10,6 +10,7 @@
     "test": "node --experimental-strip-types --test lib/assessment/flow.test.ts lib/assessment/persist.test.ts lib/ui/progress.test.ts lib/matching/match.test.ts lib/matching/normalizeAnswers.test.ts lib/results/fromMatchReport.test.ts lib/payment/handoff.test.ts lib/payment/verifySession.test.ts lib/payment/accessCookie.test.ts lib/payment/gate.test.ts lib/payment/webhook.test.ts lib/share/referral.test.ts lib/catalog-import/validate.test.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
