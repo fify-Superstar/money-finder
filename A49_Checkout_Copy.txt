@@ -1,0 +1,206 @@
+A$19 vs A$49 — Money Finder checkout copy
+Paste into Payment Links, landing modules, and emails.
+Voice: calm, specific, premium. No guaranteed income. Not financial advice.
+
+================================================================
+SIDE-BY-SIDE POSITIONING
+================================================================
+
+TWO WAYS TO GET YOUR MONEY MAP
+
+A$19  AUTOMATED ASSESSMENT
+12 questions. Instant Top 3. Same matching engine, every time.
+You take it from there.
+
+A$49  PERSONAL MONEY MAP
+Same assessment and engine — then a human reviews your answers
+and writes the first month around your Rank 1 fit.
+
+                         A$19 Automated              A$49 Personal Money Map
+                         assessment                  (human-in-the-loop)
+
+Best if you              Want a fast, ranked         Want a person to turn
+                         Top 3 and will plan         that Top 3 into a week
+                         the week yourself           you can actually run
+
+12-question diagnostic   Yes                         Yes
+
+Top 3 opportunities      Automated ranking           Automated baseline, then
+                         and scores                  checked by a reviewer
+
+Why it fits              Engine explanation          Deep-dive: why Option #1
+                                                     is the fit for *your*
+                                                     time, budget, and risk
+
+Next steps               Standard first              Executive 7-day checklist
+                         actions from the            written day-by-day
+                         engine
+
+Milestones               Standard 3 per              30-day milestone pathway
+                         opportunity                 with checkpoints
+
+Risks                    Not sequenced               Critical watch-outs tied
+                         into a plan                 to what you said
+
+Human review             No                          Yes — diagnostic read
+                                                     before the plan is sent
+
+When you get it          Instant in-app              In-app Top 3 immediately;
+                         Money Map                   Personal Money Map after
+                                                     review
+
+Price                    A$19 one-time               A$49 one-time
+
+Neither tier promises income, clients, or work.
+
+================================================================
+HEADLINES
+================================================================
+
+A$19
+- Your Top 3 Money Map — in minutes.
+- Automated matching. Clear ranked fits. No generic hustle list.
+
+A$49
+- Human review. A 7-day path. A 30-day pathway — built on your Rank 1.
+- Same engine. A person on your answers. A month you can follow.
+- A$19 shows the map. A$49 walks the first 30 days.
+
+================================================================
+WHY HUMAN-IN-THE-LOOP JUSTIFIES A$49
+================================================================
+
+You are not paying A$30 extra for a prettier PDF of the same screen.
+
+A$19 already gives you the matching engine: Top 3, scores, why it fits,
+and the catalogue’s first actions. That is the automated assessment.
+
+A$49 pays for a reviewer to sit with *your* 12 answers and do four things
+the engine does not do on its own:
+
+1. Confirm Rank 1 is the right *start* for this person — not just the
+   highest score on a list.
+2. Write a day-by-day 7-day checklist that respects their hours and
+   budget, instead of leaving three generic actions unsequenced.
+3. Stretch those actions into a 30-day milestone pathway with evidence
+   checkpoints, so week 2 and week 3 are not improvised.
+4. Flag critical risks and watch-outs from what they said they cannot
+   spend, cannot risk, or would rather avoid.
+
+That is human-in-the-loop: the engine ranks; a person plans.
+
+If you will do that planning yourself, A$19 is the honest choice.
+If you want that planning done from your diagnostic, A$49 is the fit.
+
+Still ranked fits. Not a promise of income. Not financial advice.
+
+================================================================
+A$19 CHECKOUT BLOCK
+================================================================
+
+A$19 Automated Money Map
+
+Answer 12 questions. The matching engine returns a personalised Top 3 —
+scores, explanations, first steps. Instant, in this browser.
+
+Included:
+- Ranked Top 3 (not a one-size list)
+- Match scores and why each one fits
+- Engine first actions and milestones
+
+Not included:
+- Human review
+- A day-by-day 7-day plan
+- A 30-day pathway written for you
+
+[CTA] Get the A$19 automated Money Map
+
+================================================================
+A$49 CHECKOUT BLOCK
+================================================================
+
+A$49 Personal Money Map
+
+Same 12 questions and matching engine. Then a person reviews your
+answers and sends a Personal Money Map built around Rank 1.
+
+Included — everything in A$19, plus:
+- Human-in-the-loop review of your diagnostic
+- Deep-dive: why Option #1 is the ultimate fit for your situation
+- Executive 7-day action checklist (day-by-day)
+- 30-day milestone pathway
+- Critical risks and watch-outs to avoid
+
+[CTA] Get the A$49 Personal Money Map
+
+================================================================
+REASSURANCE / FAQ — CHOOSING A TIER
+================================================================
+
+Which one should I buy?
+
+Choose A$19 if you want the ranked map quickly and are happy to decide
+what to do on Day 1, Day 2, and Day 3 yourself.
+
+Choose A$49 if you want a reviewer to read your answers and hand you a
+7-day checklist and 30-day pathway around Rank 1.
+
+Is A$49 the same report at a higher price?
+
+No. The automated Top 3 is the A$19 product. A$49 adds human review and
+the written week-and-month plan. You still get the in-app map; the
+Personal Money Map is the extra deliverable.
+
+Can I buy A$19 now and upgrade later?
+
+Treat them as two products. If you only need the engine output, stay on
+A$19. If you already know you want the reviewed plan, buy A$49 once.
+
+Will A$49 make me money?
+
+No. Neither tier can promise income. You get a clearer fit (A$19) or a
+clearer fit plus a clearer plan (A$49). Earnings depend on your
+circumstances, effort, skills, and the market.
+
+Is this financial advice?
+
+No. Matching and planning based on your assessment. Not financial,
+investment, tax, or employment advice.
+
+When do I get the A$49 report?
+
+After Stripe confirms a paid A$49 checkout, complete the assessment.
+Your automated Top 3 still appears in-app. The Personal Money Map is
+prepared from those answers after human review.
+
+What if I only have a little time this week?
+
+That is exactly what the reviewer uses. The 7-day checklist is meant to
+fit the hours you stated — not a 40-hour sprint.
+
+================================================================
+BUTTONS AND STRIPE LINES
+================================================================
+
+A$19: Get my automated Money Map — A$19
+A$49: Get my Personal Money Map — A$49
+Secondary: Compare tiers
+
+Stripe A$19: Money Finder — Automated Money Map
+Stripe A$49: Money Finder — Personal Money Map (human review)
+
+Under either price:
+One-time. Access after Stripe confirms paid checkout.
+Matches, not guaranteed income.
+
+================================================================
+VOICE
+================================================================
+
+Use: personalised, ranked fits, human review, human-in-the-loop,
+day-by-day, pathway, watch-outs, starting point.
+
+Do not use: guaranteed income, passive income, get rich, fake scarcity,
+“unlock your wealth”.
+
+Keep Stripe amounts at 1900 cents (A$19) and 4900 cents (A$49) AUD.

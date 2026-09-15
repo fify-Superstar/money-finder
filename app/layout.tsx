@@ -26,8 +26,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
-  const startHref = getCustomerStartHref();
   const paymentLinked = isPaymentLinked();
+  const startHref = paymentLinked ? "/#pricing" : getCustomerStartHref();
 
   return (
     <html

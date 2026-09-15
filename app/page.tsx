@@ -1,15 +1,19 @@
 import { HomePage } from "@/components/marketing/HomePage";
-import { getCustomerStartHref, isPaymentLinked } from "@/lib/payment/handoff";
+import {
+  getCustomerPremiumStartHref,
+  getCustomerStartHref,
+  isPaymentLinked,
+} from "@/lib/payment/handoff";
 
 export default function Home() {
   const paymentLinked = isPaymentLinked();
-  const startHref = getCustomerStartHref();
-  const ctaLabel = paymentLinked ? "Find My Money Map" : "Start the assessment";
+  const standardHref = getCustomerStartHref();
+  const premiumHref = getCustomerPremiumStartHref();
 
   return (
     <HomePage
-      startHref={startHref}
-      ctaLabel={ctaLabel}
+      standardHref={standardHref}
+      premiumHref={premiumHref}
       paymentLinked={paymentLinked}
     />
   );

@@ -2,6 +2,10 @@ import Stripe from "stripe";
 
 export const CHECKOUT_SESSION_ID_PATTERN = /^cs_(test|live)_[A-Za-z0-9]+$/;
 
+/** Paid access is granted for either product tier, in AUD only. */
+export const PAID_ACCESS_AMOUNT_CENTS = [1900, 4900] as const;
+export const PAID_ACCESS_CURRENCIES = ["aud"] as const;
+
 export type VerifiedPayment = {
   sessionId: string;
   email: string | null;
@@ -10,12 +14,23 @@ export type VerifiedPayment = {
 
 export type SessionVerificationResult =
   | { ok: true; payment: VerifiedPayment }
-  | { ok: false; reason: "missing" | "malformed" | "incomplete" | "unpaid" | "unavailable" };
+  | {
+      ok: false;
+      reason:
+        | "missing"
+        | "malformed"
+        | "incomplete"
+        | "unpaid"
+        | "unavailable"
+        | "wrong_price";
+    };
 
 export type CheckoutSessionSnapshot = {
   id: string;
   status: string | null;
   payment_status: string | null;
+  amount_total?: number | null;
+  currency?: string | null;
   customer_email?: string | null;
   customer_details?: { email?: string | null } | null;
   created?: number | null;
@@ -52,6 +67,8 @@ export function createStripeSessionLookup(
         id: session.id,
         status: session.status,
         payment_status: session.payment_status,
+        amount_total: session.amount_total,
+        currency: session.currency,
         customer_email: session.customer_email,
         customer_details: session.customer_details
           ? { email: session.customer_details.email }
@@ -80,6 +97,16 @@ function paidAtFromSession(session: CheckoutSessionSnapshot): string {
   return new Date().toISOString();
 }
 
+export function isExpectedPaidPrice(session: CheckoutSessionSnapshot): boolean {
+  const amount = session.amount_total;
+  const currency = session.currency?.trim().toLowerCase() ?? "";
+  return (
+    typeof amount === "number" &&
+    (PAID_ACCESS_AMOUNT_CENTS as readonly number[]).includes(amount) &&
+    (PAID_ACCESS_CURRENCIES as readonly string[]).includes(currency)
+  );
+}
+
 export async function verifyPaidCheckoutSession(
   sessionId: string | null | undefined,
   lookup: StripeSessionLookup = createStripeSessionLookup(),
@@ -105,6 +132,10 @@ export async function verifyPaidCheckoutSession(
 
   if (session.payment_status !== "paid") {
     return { ok: false, reason: "unpaid" };
+  }
+
+  if (!isExpectedPaidPrice(session)) {
+    return { ok: false, reason: "wrong_price" };
   }
 
   return {

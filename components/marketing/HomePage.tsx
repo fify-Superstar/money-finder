@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Container } from "@/components/layout/Container";
+import { PricingTiers } from "@/components/marketing/PricingTiers";
 import { ReferralCapture } from "@/components/share/ReferralCapture";
 
 const steps = [
@@ -60,6 +60,11 @@ const faqs = [
     answer:
       "Yes. After you have a Money Map, you can retake the assessment. A retake starts a fresh questionnaire rather than showing a completed screen.",
   },
+  {
+    question: "Which Money Map should I choose?",
+    answer:
+      "A$19 is the automated assessment: an instant Top 3 from the matching engine. A$49 is the Personal Money Map: the same engine, plus human review, a tailored 7-day action path, and a 30-day milestone tracker. Neither guarantees income.",
+  },
 ];
 
 const exampleMatches = [
@@ -84,12 +89,16 @@ const exampleMatches = [
 ];
 
 type HomePageProps = {
-  startHref: string;
-  ctaLabel: string;
+  standardHref: string;
+  premiumHref: string;
   paymentLinked: boolean;
 };
 
-export function HomePage({ startHref, ctaLabel, paymentLinked }: HomePageProps) {
+export function HomePage({
+  standardHref,
+  premiumHref,
+  paymentLinked,
+}: HomePageProps) {
   return (
     <div>
       <ReferralCapture />
@@ -107,15 +116,13 @@ export function HomePage({ startHref, ctaLabel, paymentLinked }: HomePageProps) 
           personalised Top 3 Money Map — with scores, explanations, and first
           steps. It does not guarantee income.
         </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <Button href={startHref} size="lg">
-            {ctaLabel}
-          </Button>
-          <p className="max-w-sm text-sm leading-relaxed text-muted sm:pl-2">
-            {paymentLinked
-              ? "A short assessment after a secure Stripe checkout. Matches are not a promise of income."
-              : "Pre-launch private demo. Nothing is charged. Matches are not a promise of income."}
-          </p>
+        <div className="mt-10">
+          <PricingTiers
+            id="pricing"
+            standardHref={standardHref}
+            premiumHref={premiumHref}
+            paymentLinked={paymentLinked}
+          />
         </div>
       </Container>
 
@@ -145,51 +152,36 @@ export function HomePage({ startHref, ctaLabel, paymentLinked }: HomePageProps) 
       </section>
 
       <section id="what-you-get">
-        <Container className="grid gap-10 py-16 sm:grid-cols-[1.1fr_0.9fr] sm:items-start">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper">
-              What you get
-            </p>
-            <h2 className="mt-2 font-display text-3xl tracking-tight sm:text-4xl">
-              A ranked plan you can actually use
-            </h2>
-            <p className="mt-4 max-w-xl leading-relaxed text-muted">
-              Your Money Map is built from your answers, not a one-size-fits-all
-              list of side hustles. You see why each opportunity was selected
-              and what to do first.
-            </p>
-            <ul className="mt-8 space-y-4">
-              {mapIncludes.map((item) => (
-                <li key={item} className="flex gap-3 text-base leading-relaxed">
-                  <span
-                    aria-hidden="true"
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-moss"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
+        <Container className="py-16">
+          <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper">
+            What you get
+          </p>
+          <h2 className="mt-2 font-display text-3xl tracking-tight sm:text-4xl">
+            A ranked plan you can actually use
+          </h2>
+          <p className="mt-4 max-w-xl leading-relaxed text-muted">
+            Your Money Map is built from your answers, not a one-size-fits-all
+            list of side hustles. You see why each opportunity was selected
+            and what to do first.
+          </p>
+          <ul className="mt-8 space-y-4">
+            {mapIncludes.map((item) => (
+              <li key={item} className="flex gap-3 text-base leading-relaxed">
+                <span
+                  aria-hidden="true"
+                  className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-moss"
+                />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-10">
+            <PricingTiers
+              standardHref={standardHref}
+              premiumHref={premiumHref}
+              paymentLinked={paymentLinked}
+            />
           </div>
-          <Card as="aside">
-            <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
-              {paymentLinked ? "Start here" : "Pre-launch"}
-            </p>
-            <p className="mt-3 font-display text-3xl tracking-tight text-ink">
-              Short assessment. Clear next steps.
-            </p>
-            <p className="mt-2 leading-relaxed text-muted">
-              {paymentLinked
-                ? "Checkout is handled by Stripe. The assessment opens after payment is verified. No income is guaranteed."
-                : "This public site is a private demo. Checkout is not taking live charges in this build."}
-            </p>
-            <Button href={startHref} fullWidth className="mt-8">
-              {ctaLabel}
-            </Button>
-            <p className="mt-5 text-sm leading-relaxed text-muted">
-              These are ranked fits based on your answers, not a promise of
-              income.
-            </p>
-          </Card>
         </Container>
       </section>
 
@@ -317,15 +309,12 @@ export function HomePage({ startHref, ctaLabel, paymentLinked }: HomePageProps) 
             Twelve questions. A personalised Top 3. Clear first moves. Results
             are matches, not guaranteed income.
           </p>
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Button href={startHref} size="lg">
-              {ctaLabel}
-            </Button>
-            <p className="text-sm text-muted">
-              {paymentLinked
-                ? "You will be taken to checkout, then the assessment."
-                : "Unpaid private demo — payment is not connected in this build."}
-            </p>
+          <div className="mt-10">
+            <PricingTiers
+              standardHref={standardHref}
+              premiumHref={premiumHref}
+              paymentLinked={paymentLinked}
+            />
           </div>
         </Container>
       </section>

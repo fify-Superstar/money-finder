@@ -19,16 +19,16 @@ export type EnvLike = Record<string, string | undefined>;
 export type StripePaymentHandoffConfig = {
   /** Public Payment Link URL from env. Null means checkout is not connected. */
   paymentLinkUrl: string | null;
+  /** A$49 Personal Money Map Payment Link. Null means the premium tier is not connected. */
+  premiumPaymentLinkUrl: string | null;
   successPath: typeof PAYMENT_SUCCESS_PATH;
   cancelPath: typeof PAYMENT_CANCEL_PATH;
   postPaymentContinuePath: typeof POST_PAYMENT_CONTINUE_PATH;
   resultsPath: typeof RESULTS_PATH;
 };
 
-export function readPaymentLinkUrl(
-  env: EnvLike = process.env,
-): string | null {
-  const raw = env.STRIPE_PAYMENT_LINK_URL?.trim() ?? "";
+function readHttpsEnvUrl(env: EnvLike, key: string): string | null {
+  const raw = env[key]?.trim() ?? "";
   if (!raw) {
     return null;
   }
@@ -44,11 +44,24 @@ export function readPaymentLinkUrl(
   }
 }
 
+export function readPaymentLinkUrl(
+  env: EnvLike = process.env,
+): string | null {
+  return readHttpsEnvUrl(env, "STRIPE_PAYMENT_LINK_URL");
+}
+
+export function readPremiumPaymentLinkUrl(
+  env: EnvLike = process.env,
+): string | null {
+  return readHttpsEnvUrl(env, "STRIPE_PREMIUM_PAYMENT_LINK_URL");
+}
+
 export function getStripeHandoffConfig(
   env: EnvLike = process.env,
 ): StripePaymentHandoffConfig {
   return {
     paymentLinkUrl: readPaymentLinkUrl(env),
+    premiumPaymentLinkUrl: readPremiumPaymentLinkUrl(env),
     successPath: PAYMENT_SUCCESS_PATH,
     cancelPath: PAYMENT_CANCEL_PATH,
     postPaymentContinuePath: POST_PAYMENT_CONTINUE_PATH,
@@ -66,6 +79,9 @@ export const stripeHandoff: StripePaymentHandoffConfig = {
   resultsPath: RESULTS_PATH,
   get paymentLinkUrl() {
     return readPaymentLinkUrl();
+  },
+  get premiumPaymentLinkUrl() {
+    return readPremiumPaymentLinkUrl();
   },
 };
 
@@ -88,10 +104,22 @@ export function getCustomerStartHref(
   return config.paymentLinkUrl ?? POST_PAYMENT_CONTINUE_PATH;
 }
 
+export function getCustomerPremiumStartHref(
+  config: StripePaymentHandoffConfig = getStripeHandoffConfig(),
+): string {
+  return config.premiumPaymentLinkUrl ?? POST_PAYMENT_CONTINUE_PATH;
+}
+
 export function isPaymentLinked(
   config: StripePaymentHandoffConfig = getStripeHandoffConfig(),
 ): boolean {
-  return Boolean(config.paymentLinkUrl);
+  return Boolean(config.paymentLinkUrl || config.premiumPaymentLinkUrl);
+}
+
+export function isPremiumPaymentLinked(
+  config: StripePaymentHandoffConfig = getStripeHandoffConfig(),
+): boolean {
+  return Boolean(config.premiumPaymentLinkUrl);
 }
 
 export function createUnpaidAccessRecord(): PaymentAccessRecord {

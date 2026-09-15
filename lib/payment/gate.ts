@@ -3,7 +3,7 @@ import {
   readAccessSigningSecret,
   verifyAccessToken,
 } from "./accessCookie.ts";
-import { readPaymentLinkUrl, type EnvLike } from "./handoff.ts";
+import { readPaymentLinkUrl, readPremiumPaymentLinkUrl, type EnvLike } from "./handoff.ts";
 
 export function isProtectedPath(pathname: string): boolean {
   return (
@@ -15,7 +15,7 @@ export function isProtectedPath(pathname: string): boolean {
 }
 
 export function isPaymentGatingEnabled(env: EnvLike = process.env): boolean {
-  return Boolean(readPaymentLinkUrl(env));
+  return Boolean(readPaymentLinkUrl(env) || readPremiumPaymentLinkUrl(env));
 }
 
 export function readAccessCookieValue(

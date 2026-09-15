@@ -63,6 +63,15 @@ test("middleware permits a valid signed cookie", async () => {
   );
 });
 
+test("a premium Payment Link alone enables payment gating", async () => {
+  assert.equal(
+    await allowProtectedRequest("/assessment", undefined, {
+      STRIPE_PREMIUM_PAYMENT_LINK_URL: PAYMENT_LINK,
+    }),
+    false,
+  );
+});
+
 test("demo mode does not gate assessment or results", async () => {
   assert.equal(await allowProtectedRequest("/assessment", undefined, {}), true);
   assert.equal(await allowProtectedRequest("/results", undefined, {}), true);

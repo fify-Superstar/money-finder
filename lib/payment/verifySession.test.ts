@@ -15,6 +15,8 @@ function snapshot(
     id: PAID_ID,
     status: "complete",
     payment_status: "paid",
+    amount_total: 4900,
+    currency: "aud",
     customer_email: "paid@example.test",
     created: 1_700_000_000,
     ...overrides,
@@ -116,13 +118,60 @@ test("missing STRIPE_SECRET_KEY cannot retrieve a session and is not treated as 
   }
 });
 
-test("valid paid sessions are accepted", async () => {
+test("valid paid A$49 AUD sessions are accepted", async () => {
   const result = await verifyPaidCheckoutSession(PAID_ID, lookup(snapshot()));
   assert.equal(result.ok, true);
   if (result.ok) {
     assert.equal(result.payment.sessionId, PAID_ID);
     assert.equal(result.payment.email, "paid@example.test");
     assert.equal(result.payment.paidAt, "2023-11-14T22:13:20.000Z");
+  }
+});
+
+test("valid paid A$19 AUD sessions are accepted", async () => {
+  const result = await verifyPaidCheckoutSession(
+    PAID_ID,
+    lookup(snapshot({ amount_total: 1900, currency: "aud" })),
+  );
+  assert.equal(result.ok, true);
+  if (result.ok) {
+    assert.equal(result.payment.sessionId, PAID_ID);
+  }
+});
+
+test("paid sessions outside the A$19 and A$49 AUD tiers are rejected", async () => {
+  const otherAmount = await verifyPaidCheckoutSession(
+    PAID_ID,
+    lookup(snapshot({ amount_total: 2000, currency: "aud" })),
+  );
+  const otherCurrency = await verifyPaidCheckoutSession(
+    PAID_ID,
+    lookup(snapshot({ amount_total: 4900, currency: "usd" })),
+  );
+  const tierOneWrongCurrency = await verifyPaidCheckoutSession(
+    PAID_ID,
+    lookup(snapshot({ amount_total: 1900, currency: "usd" })),
+  );
+  const missingAmount = await verifyPaidCheckoutSession(
+    PAID_ID,
+    lookup(snapshot({ amount_total: null, currency: "aud" })),
+  );
+
+  assert.equal(otherAmount.ok, false);
+  assert.equal(otherCurrency.ok, false);
+  assert.equal(tierOneWrongCurrency.ok, false);
+  assert.equal(missingAmount.ok, false);
+  if (!otherAmount.ok) {
+    assert.equal(otherAmount.reason, "wrong_price");
+  }
+  if (!otherCurrency.ok) {
+    assert.equal(otherCurrency.reason, "wrong_price");
+  }
+  if (!tierOneWrongCurrency.ok) {
+    assert.equal(tierOneWrongCurrency.reason, "wrong_price");
+  }
+  if (!missingAmount.ok) {
+    assert.equal(missingAmount.reason, "wrong_price");
   }
 });
 
