@@ -4,6 +4,7 @@ import {
   verifyAccessToken,
 } from "./accessCookie.ts";
 import { readPaymentLinkUrl, readPremiumPaymentLinkUrl, type EnvLike } from "./handoff.ts";
+import { isCheckoutSessionId } from "./sessionId.ts";
 
 export function isProtectedPath(pathname: string): boolean {
   return (
@@ -49,6 +50,27 @@ export async function hasValidAccessCookie(
   const secret = readAccessSigningSecret(env);
   const token = readAccessCookieValue(cookieHeader);
   return (await verifyAccessToken(token, secret, nowMs)) !== null;
+}
+
+/**
+ * Stripe may return the customer to /assessment with session_id.
+ * Send that through /success so the access cookie can be issued
+ * instead of dropping them on /.
+ */
+export function checkoutReturnPath(
+  pathname: string,
+  sessionId: string | null | undefined,
+): string | null {
+  if (!isProtectedPath(pathname)) {
+    return null;
+  }
+
+  const id = sessionId?.trim() ?? "";
+  if (!isCheckoutSessionId(id)) {
+    return null;
+  }
+
+  return `/success?session_id=${encodeURIComponent(id)}`;
 }
 
 /**

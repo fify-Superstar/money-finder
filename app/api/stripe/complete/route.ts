@@ -4,21 +4,21 @@ import {
   accessCookieOptions,
   issueAccessCookieValue,
 } from "@/lib/payment/accessCookie";
+import { publicOriginFromRequest } from "@/lib/payment/publicOrigin";
 import { verifyPaidCheckoutSession } from "@/lib/payment/verifySession";
 
 export const runtime = "nodejs";
 
 function originFromRequest(request: Request): string {
-  const configured = process.env.APP_URL?.trim();
-  if (configured) {
-    try {
-      return new URL(configured).origin;
-    } catch {
-      // Fall through to the incoming request origin.
-    }
-  }
-
-  return new URL(request.url).origin;
+  return publicOriginFromRequest(
+    request.url,
+    {
+      host: request.headers.get("host"),
+      forwardedHost: request.headers.get("x-forwarded-host"),
+      forwardedProto: request.headers.get("x-forwarded-proto"),
+    },
+    process.env.APP_URL,
+  );
 }
 
 export async function GET(request: Request) {

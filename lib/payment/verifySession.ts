@@ -1,10 +1,35 @@
 import Stripe from "stripe";
+import { isCheckoutSessionId } from "./sessionId.ts";
 
-export const CHECKOUT_SESSION_ID_PATTERN = /^cs_(test|live)_[A-Za-z0-9]+$/;
+export { CHECKOUT_SESSION_ID_PATTERN, isCheckoutSessionId } from "./sessionId.ts";
 
 /** Paid access is granted for either product tier, in AUD only. */
-export const PAID_ACCESS_AMOUNT_CENTS = [1900, 4900] as const;
+export const STANDARD_AMOUNT_CENTS = 1900;
+export const PREMIUM_AMOUNT_CENTS = 4900;
+export const PAID_ACCESS_AMOUNT_CENTS = [
+  STANDARD_AMOUNT_CENTS,
+  PREMIUM_AMOUNT_CENTS,
+] as const;
 export const PAID_ACCESS_CURRENCIES = ["aud"] as const;
+
+export type PaidProductTier = "standard" | "premium";
+
+export function classifyPaidProductTier(
+  amountTotal: number | null | undefined,
+  currency: string | null | undefined,
+): PaidProductTier | null {
+  const currencyNorm = currency?.trim().toLowerCase() ?? "";
+  if (!(PAID_ACCESS_CURRENCIES as readonly string[]).includes(currencyNorm)) {
+    return null;
+  }
+  if (amountTotal === STANDARD_AMOUNT_CENTS) {
+    return "standard";
+  }
+  if (amountTotal === PREMIUM_AMOUNT_CENTS) {
+    return "premium";
+  }
+  return null;
+}
 
 export type VerifiedPayment = {
   sessionId: string;
@@ -39,12 +64,6 @@ export type CheckoutSessionSnapshot = {
 export type StripeSessionLookup = {
   retrieve(sessionId: string): Promise<CheckoutSessionSnapshot>;
 };
-
-export function isCheckoutSessionId(
-  value: string | null | undefined,
-): value is string {
-  return typeof value === "string" && CHECKOUT_SESSION_ID_PATTERN.test(value);
-}
 
 export function createStripeSessionLookup(
   env: NodeJS.ProcessEnv = process.env,
@@ -98,13 +117,7 @@ function paidAtFromSession(session: CheckoutSessionSnapshot): string {
 }
 
 export function isExpectedPaidPrice(session: CheckoutSessionSnapshot): boolean {
-  const amount = session.amount_total;
-  const currency = session.currency?.trim().toLowerCase() ?? "";
-  return (
-    typeof amount === "number" &&
-    (PAID_ACCESS_AMOUNT_CENTS as readonly number[]).includes(amount) &&
-    (PAID_ACCESS_CURRENCIES as readonly string[]).includes(currency)
-  );
+  return classifyPaidProductTier(session.amount_total, session.currency) !== null;
 }
 
 export async function verifyPaidCheckoutSession(

@@ -3,6 +3,7 @@ import test from "node:test";
 import {
   createStripeSessionLookup,
   verifyPaidCheckoutSession,
+  classifyPaidProductTier,
   type CheckoutSessionSnapshot,
 } from "./verifySession.ts";
 
@@ -137,6 +138,14 @@ test("valid paid A$19 AUD sessions are accepted", async () => {
   if (result.ok) {
     assert.equal(result.payment.sessionId, PAID_ID);
   }
+});
+
+test("classifyPaidProductTier maps A$19 and A$49 AUD only", () => {
+  assert.equal(classifyPaidProductTier(1900, "aud"), "standard");
+  assert.equal(classifyPaidProductTier(4900, "AUD"), "premium");
+  assert.equal(classifyPaidProductTier(1900, "usd"), null);
+  assert.equal(classifyPaidProductTier(2000, "aud"), null);
+  assert.equal(classifyPaidProductTier(null, "aud"), null);
 });
 
 test("paid sessions outside the A$19 and A$49 AUD tiers are rejected", async () => {

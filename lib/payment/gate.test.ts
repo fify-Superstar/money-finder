@@ -11,7 +11,7 @@ import {
   hasRecordedPayment,
   type PaymentAccessRecord,
 } from "./handoff.ts";
-import { allowProtectedRequest } from "./gate.ts";
+import { allowProtectedRequest, checkoutReturnPath } from "./gate.ts";
 
 const SECRET = "test-payment-access-secret-not-for-production";
 const PAYMENT_LINK = "https://buy.stripe.com/test_example_only";
@@ -70,6 +70,19 @@ test("a premium Payment Link alone enables payment gating", async () => {
     }),
     false,
   );
+});
+
+test("a Stripe session_id on /assessment is handed to /success instead of dropped", () => {
+  assert.equal(
+    checkoutReturnPath("/assessment", "cs_live_paidSession123"),
+    "/success?session_id=cs_live_paidSession123",
+  );
+  assert.equal(
+    checkoutReturnPath("/assessment", "cs_test_paidSession123"),
+    "/success?session_id=cs_test_paidSession123",
+  );
+  assert.equal(checkoutReturnPath("/assessment", null), null);
+  assert.equal(checkoutReturnPath("/", "cs_live_paidSession123"), null);
 });
 
 test("demo mode does not gate assessment or results", async () => {
@@ -135,4 +148,5 @@ test("payment gate source does not treat browser storage as proof of payment", (
     middleware,
     /hasRecordedPayment|PaymentAccessRecord|sessionStorage/,
   );
+  assert.match(middleware, /checkoutReturnPath/);
 });

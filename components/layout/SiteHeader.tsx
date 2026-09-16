@@ -19,7 +19,7 @@ type SiteHeaderProps = {
 };
 
 export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const onResults =
     pathname === "/results" || pathname.startsWith("/results/");
   const ctaHref = onResults ? ASSESSMENT_RETAKE_HREF : startHref;
