@@ -19,6 +19,8 @@ function toMatch(match: OpportunityMatch): MoneyMapMatch | null {
     name: match.opportunity.name,
     score: match.score,
     explanation: match.explanation,
+    incomePotentialMin: match.opportunity.incomePotentialMin,
+    incomePotentialMax: match.opportunity.incomePotentialMax,
     milestones: [asStep(m1), asStep(m2), asStep(m3)],
     actions: [asStep(a1), asStep(a2), asStep(a3)],
   };

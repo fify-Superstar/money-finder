@@ -21,7 +21,7 @@ export function CompletedAssessmentNotice() {
   return (
     <EmptyState
       title={`Thanks, ${name}`}
-      description="Your assessment is saved on this device. Matching is not implemented yet, so the Money Map below is still a placeholder — not a guarantee of income."
+      description="Your assessment is saved on this device. Continue to results for your personalised Money Map. Matches are not a guarantee of income."
     />
   );
 }

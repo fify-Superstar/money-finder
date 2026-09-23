@@ -1,11 +1,29 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { ShareMoneyMapCta } from "@/components/share/ShareMoneyMapCta";
 import { ASSESSMENT_RETAKE_HREF } from "@/lib/assessment/persist";
 import type { MoneyMap, MoneyMapMatch, MoneyMapStep } from "@/lib/results/types";
 
 const RANK1_ACTIONS_ID = "rank-1-this-week";
+
+const IncomeMilestonesChart = dynamic(
+  () =>
+    import("@/components/results/IncomeMilestonesChart").then(
+      (mod) => mod.IncomeMilestonesChart,
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        aria-hidden="true"
+        className="h-[28rem] rounded-3xl border border-line bg-cream shadow-[0_20px_50px_rgba(23,36,28,0.06)]"
+      />
+    ),
+  },
+);
 
 const INCOME_ABOVE_TARGET_EXPLANATION =
   "Eligible match; your income target is above the listed opportunity potential.";
@@ -244,6 +262,8 @@ export function MoneyMapView({ map }: MoneyMapViewProps) {
         These are ranked fits based on your answers, not a promise of income.
       </p>
 
+      <IncomeMilestonesChart matches={map.matches} />
+
       {rest.length > 0 ? (
         <div className="space-y-4">
           <h2 className="font-display text-2xl tracking-tight">Also a strong fit</h2>
@@ -256,7 +276,7 @@ export function MoneyMapView({ map }: MoneyMapViewProps) {
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <a
           href={`#${RANK1_ACTIONS_ID}`}
-          className="inline-flex min-h-11 max-w-full items-center justify-center whitespace-normal rounded-full bg-moss px-6 py-3 text-center text-base font-medium text-cream transition hover:bg-moss-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+          className="inline-flex min-h-11 max-w-full items-center justify-center whitespace-normal rounded-full border-2 border-mint bg-moss px-6 py-3 text-center text-base font-medium text-cream shadow-[0_0_18px_rgba(61,255,166,0.28)] transition hover:border-mint-glow hover:bg-moss-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint"
           onClick={focusRank1Actions}
         >
           Start with {rank1.name}
@@ -265,6 +285,8 @@ export function MoneyMapView({ map }: MoneyMapViewProps) {
           Retake assessment
         </Button>
       </div>
+
+      <ShareMoneyMapCta />
     </div>
   );
 }

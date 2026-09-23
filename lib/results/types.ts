@@ -8,6 +8,8 @@ export type MoneyMapMatch = {
   name: string;
   score: number;
   explanation: string;
+  incomePotentialMin: number;
+  incomePotentialMax: number;
   milestones: [MoneyMapStep, MoneyMapStep, MoneyMapStep];
   actions: [MoneyMapStep, MoneyMapStep, MoneyMapStep];
 };

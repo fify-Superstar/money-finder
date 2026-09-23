@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 
 const variants = {
   primary:
-    "bg-moss text-cream hover:bg-moss-dark focus-visible:outline-moss",
+    "border-2 border-mint bg-moss text-cream shadow-[0_0_18px_rgba(61,255,166,0.28)] hover:border-mint-glow hover:bg-moss-dark focus-visible:outline-mint",
   secondary:
     "border border-line bg-cream text-ink hover:border-moss hover:text-moss focus-visible:outline-moss",
   ghost: "text-ink hover:text-moss focus-visible:outline-moss",

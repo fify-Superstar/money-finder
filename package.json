@@ -5,15 +5,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "stamp-brand": "python3 scripts/deploy_brand_assets.py",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-strip-types --test lib/assessment/flow.test.ts lib/assessment/persist.test.ts lib/ui/progress.test.ts lib/matching/match.test.ts lib/matching/normalizeAnswers.test.ts lib/results/fromMatchReport.test.ts lib/payment/handoff.test.ts lib/payment/verifySession.test.ts lib/payment/accessCookie.test.ts lib/payment/gate.test.ts lib/payment/webhook.test.ts lib/payment/checkoutWebhook.test.ts lib/payment/publicOrigin.test.ts lib/sheets/logPurchase.test.ts lib/share/referral.test.ts lib/catalog-import/validate.test.ts"
+    "test": "node --experimental-strip-types --test lib/assessment/flow.test.ts lib/assessment/persist.test.ts lib/ui/progress.test.ts lib/matching/match.test.ts lib/matching/normalizeAnswers.test.ts lib/results/fromMatchReport.test.ts lib/results/incomeMilestones.test.ts lib/payment/handoff.test.ts lib/payment/verifySession.test.ts lib/payment/accessCookie.test.ts lib/payment/gate.test.ts lib/payment/webhook.test.ts lib/payment/checkoutWebhook.test.ts lib/payment/publicOrigin.test.ts lib/sheets/logPurchase.test.ts lib/share/referral.test.ts lib/catalog-import/validate.test.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "recharts": "^3.10.1",
     "stripe": "^22.6.0"
   },
   "devDependencies": {
@@ -25,6 +27,6 @@
     "eslint-config-next": "16.3.3",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vercel": "^59.17.0"
+    "vercel": "^59.19.0"
   }
 }

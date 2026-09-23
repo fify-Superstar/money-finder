@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   title: "Money Finder — Personalised Money Map",
   description:
     "A personalised Money Map of income opportunities based on your skills, time, budget and goals. Ranked fits, not a promise of income.",
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -7,7 +7,7 @@ export function Container({
 }) {
   return (
     <div
-      className={`mx-auto w-full max-w-5xl px-5 sm:px-8 ${className ?? ""}`.trim()}
+      className={`mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10 ${className ?? ""}`.trim()}
     >
       {children}
     </div>

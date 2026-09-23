@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { cn } from "@/lib/cn";
 
 type PricingTiersProps = {
   standardHref: string;
@@ -24,8 +23,8 @@ export function PricingTiers({
       <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper">
         Two ways to get your Money Map
       </p>
-      <div className="mt-5 grid gap-4 lg:grid-cols-2 lg:items-stretch">
-        <Card className="flex h-full flex-col">
+      <div className="mt-5 grid gap-6 lg:grid-cols-2 lg:items-stretch">
+        <Card elevated className="flex h-full flex-col">
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
             Standard
           </p>
@@ -50,10 +49,8 @@ export function PricingTiers({
         </Card>
 
         <Card
-          className={cn(
-            "flex h-full flex-col border-moss/35 bg-cream",
-            "shadow-[0_1px_0_rgba(23,36,28,0.04)]",
-          )}
+          elevated
+          className="flex h-full flex-col border-moss/35 bg-cream"
         >
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-moss">
             Recommended · Premium
@@ -78,7 +75,7 @@ export function PricingTiers({
           </div>
         </Card>
       </div>
-      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted">
+      <p className="mt-5 max-w-[650px] text-sm leading-relaxed text-muted">
         These are ranked fits based on your answers, not a promise of income.
         Neither tier guarantees income, clients, or work.
       </p>

@@ -44,9 +44,8 @@ export default function PrivacyPage() {
           payment record.
         </p>
         <p>
-          If you have a privacy question about this demo, use the contact
-          details you already have for Money Finder. Do not send payment card
-          numbers by email.
+          If you have a privacy question about Money Finder, use the contact
+          details you already have. Do not send payment card numbers by email.
         </p>
       </div>
     </Container>
