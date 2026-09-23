@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/Button";
@@ -31,15 +32,29 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
 
   return (
     <header className="border-b border-line/80">
-      <Container className="flex flex-col gap-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <Container className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:py-6">
         <div className="flex items-center justify-between gap-4">
-          <Link href="/" className="min-h-11">
-            <p className="font-display text-lg tracking-tight text-ink">
-              Money Finder
-            </p>
-            <p className="text-xs tracking-wide text-muted">
-              Personalised Money Map
-            </p>
+          <Link
+            href="/"
+            className="inline-flex items-center"
+            aria-label="Money Finder home"
+          >
+            <Image
+              src="/assets/branding/image_eT-ENo.png"
+              alt="Money Finder"
+              width={512}
+              height={512}
+              className="h-32 w-auto max-h-32 sm:h-36 sm:max-h-36"
+              style={{
+                width: "auto",
+                height: "auto",
+                maxHeight: 144,
+                filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.1))",
+              }}
+              sizes="(min-width: 640px) 144px, 128px"
+              unoptimized
+              priority
+            />
           </Link>
           <div className="sm:hidden">
             <Button href={ctaHref} size="sm">
