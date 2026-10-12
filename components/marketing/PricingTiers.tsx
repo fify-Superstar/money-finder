@@ -1,3 +1,4 @@
+import { PaymentClickTracker } from "@/components/marketing/PaymentClickTracker";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 
@@ -15,7 +16,7 @@ export function PricingTiers({
   id,
 }: PricingTiersProps) {
   const checkoutNote = paymentLinked
-    ? "A short assessment after a secure Stripe checkout. Matches are not a promise of income."
+    ? "Pay securely with Stripe → complete the assessment → see your matches. Matches are not a promise of income."
     : "Pre-launch private demo. Nothing is charged. Matches are not a promise of income.";
 
   return (
@@ -32,8 +33,8 @@ export function PricingTiers({
             A$19 Automated Assessment
           </p>
           <p className="mt-2 leading-relaxed text-muted">
-            12 questions. Instant Top 3. Same matching engine, every time. You
-            take it from there.
+            After payment, answer 12 questions to receive your personalised Top 3,
+            with match scores, reasons and practical first actions.
           </p>
           <ul className="mt-6 space-y-3 text-sm leading-relaxed">
             <li>Ranked Top 3, scores, and why each one fits</li>
@@ -41,9 +42,11 @@ export function PricingTiers({
             <li>You plan the week yourself</li>
           </ul>
           <div className="mt-8 flex flex-1 flex-col justify-end gap-4">
+            <PaymentClickTracker tier="standard" location={id ?? "homepage_repeat"}>
             <Button href={standardHref} variant="secondary" fullWidth size="lg">
-              Get the A$19 automated Money Map
+              Get my Money Map — A$19
             </Button>
+            </PaymentClickTracker>
             <p className="text-sm leading-relaxed text-muted">{checkoutNote}</p>
           </div>
         </Card>
@@ -68,9 +71,11 @@ export function PricingTiers({
             <li>Tailored 30-day milestone tracker</li>
           </ul>
           <div className="mt-8 flex flex-1 flex-col justify-end gap-4">
+            <PaymentClickTracker tier="premium" location={id ?? "homepage_repeat"}>
             <Button href={premiumHref} fullWidth size="lg">
               Get the A$49 Personal Money Map
             </Button>
+            </PaymentClickTracker>
             <p className="text-sm leading-relaxed text-muted">{checkoutNote}</p>
           </div>
         </Card>

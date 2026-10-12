@@ -1,3 +1,4 @@
+import { exampleMatches } from "@/lib/marketing/exampleMap";
 import type { ReactNode } from "react";
 import { Container } from "@/components/layout/Container";
 import { PricingTiers } from "@/components/marketing/PricingTiers";
@@ -67,27 +68,6 @@ const faqs = [
   },
 ];
 
-const exampleMatches = [
-  {
-    rank: 1,
-    name: "Short writing projects for local businesses",
-    score: "81",
-    why: "Fits a writing skill set, a modest starting budget, and limited weekly time.",
-  },
-  {
-    rank: 2,
-    name: "Professional profile and document updates",
-    score: "74",
-    why: "Uses existing communication skills and can be done in short sessions.",
-  },
-  {
-    rank: 3,
-    name: "Turning existing material into smaller content pieces",
-    score: "68",
-    why: "Builds on writing comfort without needing a large upfront spend.",
-  },
-];
-
 function SectionSplit({
   label,
   children,
@@ -123,7 +103,7 @@ function HeroDashboardMockup() {
   return (
     <aside
       className="relative isolate min-h-[22rem] overflow-hidden rounded-[1.75rem] border-2 border-ink shadow-[0_24px_60px_rgba(23,36,28,0.16)] sm:min-h-[26rem]"
-      aria-label="Illustrative Money Map dashboard mockup"
+      aria-label="Fictional example Money Map"
     >
       <div className="hero-mesh absolute inset-0" />
       <div className="relative flex h-full flex-col p-5 sm:p-6">
@@ -142,7 +122,7 @@ function HeroDashboardMockup() {
               <div className="flex items-baseline justify-between gap-3">
                 <p className="text-sm font-medium leading-snug text-ink">
                   <span className="text-muted">Rank {match.rank} · </span>
-                  {match.name}
+                  {match.opportunity.name}
                 </p>
                 <p className="shrink-0 font-display text-lg tabular-nums text-moss">
                   {match.score}
@@ -152,7 +132,7 @@ function HeroDashboardMockup() {
           ))}
         </ol>
         <p className="mt-auto pt-4 text-[11px] leading-relaxed text-cream/70">
-          Placeholder layout — not a real customer result.
+          Fictional example — your matches depend on your answers.
         </p>
       </div>
     </aside>
@@ -192,6 +172,67 @@ export function HomePage({
           </div>
           <HeroDashboardMockup />
         </div>
+      </Container>
+
+      <section id="example">
+        <Container className="py-12 sm:py-14">
+          <SectionSplit label="Example Money Map">
+            <ContentFrame>
+              <h2 className="font-display max-w-[650px] text-3xl tracking-tight sm:text-4xl">
+                See an example Money Map
+              </h2>
+              <p className="mt-4 max-w-[650px] leading-relaxed text-muted">
+                Example only — your matches depend on your assessment answers.
+                This fictional profile uses the same matching engine as your Money Map.
+              </p>
+              <aside className="mt-8 space-y-5">
+                <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
+                  Alex · fictional profile
+                </p>
+                <p className="text-sm leading-relaxed text-muted">
+                  Writing skills · under 5 hours a week · A$100 starting budget
+                  · project-based work · lower risk tolerance
+                </p>
+                <ol className="space-y-5">
+                  {exampleMatches.map((match) => (
+                    <li
+                      key={match.rank}
+                      className={match.rank === 1 ? "rounded-2xl border border-moss/25 bg-moss/5 p-5" : "border-b border-neutral-200/80 pb-5 last:border-b-0 last:pb-0"}
+                    >
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+                        <p className="font-medium leading-snug">
+                          <span className="text-muted">
+                            Rank {match.rank} ·{" "}
+                          </span>
+                          {match.opportunity.name}
+                        </p>
+                        <p className="shrink-0 text-sm text-muted">
+                          Match score {match.score} / 100
+                        </p>
+                      </div>
+                      <p className="mt-2 max-w-[650px] text-sm leading-relaxed text-muted">
+                        {match.fits.skill === 1 ? "Uses Alex’s writing skills. " : "Builds on content work. "}
+                        {match.fits.workStyle === 1 ? "Fits project-based work. " : "Offers another way to use those skills. "}
+                        Meets the sample’s starting-budget, time and risk constraints.
+                      </p>
+                      {match.rank === 1 ? (
+                        <p className="mt-3 max-w-[650px] text-sm leading-relaxed">
+                          First actions: {match.opportunity.actions.join(" · ")}.
+                        </p>
+                      ) : null}
+                    </li>
+                  ))}
+                </ol>
+                <p className="max-w-[650px] text-sm leading-relaxed text-muted">
+                  These are ranked fits, not a promise of income.
+                </p>
+              </aside>
+            </ContentFrame>
+          </SectionSplit>
+        </Container>
+      </section>
+
+      <Container className="pb-12 sm:pb-14">
         <div className="mt-10">
           <PricingTiers
             id="pricing"
@@ -285,62 +326,6 @@ export function HomePage({
         </Container>
       </section>
 
-      <section id="example">
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="Example Money Map">
-            <ContentFrame>
-              <h2 className="font-display max-w-[650px] text-3xl tracking-tight sm:text-4xl">
-                What the results look like
-              </h2>
-              <p className="mt-4 max-w-[650px] leading-relaxed text-muted">
-                This is an illustrative example of the layout you will see. It
-                is not a real customer result, not your result, and not a
-                prediction of income.
-              </p>
-              <aside className="mt-8 space-y-5">
-                <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
-                  Illustrative example
-                </p>
-                <ol className="space-y-5">
-                  {exampleMatches.map((match) => (
-                    <li
-                      key={match.rank}
-                      className="border-b border-neutral-200/80 pb-5 last:border-b-0 last:pb-0"
-                    >
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                        <p className="font-medium leading-snug">
-                          <span className="text-muted">
-                            Rank {match.rank} ·{" "}
-                          </span>
-                          {match.name}
-                        </p>
-                        <p className="shrink-0 text-sm text-muted">
-                          Match score {match.score} / 100
-                        </p>
-                      </div>
-                      <p className="mt-2 max-w-[650px] text-sm leading-relaxed text-muted">
-                        {match.why}
-                      </p>
-                      {match.rank === 1 ? (
-                        <p className="mt-3 max-w-[650px] text-sm leading-relaxed">
-                          First actions might include: practise a sample,
-                          assemble a simple offer, and contact a small number of
-                          local businesses.
-                        </p>
-                      ) : null}
-                    </li>
-                  ))}
-                </ol>
-                <p className="max-w-[650px] text-sm leading-relaxed text-muted">
-                  These are ranked fits based on your answers, not a promise of
-                  income.
-                </p>
-              </aside>
-            </ContentFrame>
-          </SectionSplit>
-        </Container>
-      </section>
-
       <section id="expectations" className="border-y border-line/80 bg-cream/60">
         <Container className="py-12 sm:py-14">
           <SectionSplit label="Trust and expectations">
@@ -395,7 +380,7 @@ export function HomePage({
         <Container className="py-12 sm:py-14">
           <div className="max-w-[650px]">
             <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
-              Start with the assessment
+              Get your personalised Money Map
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted">
               Twelve questions. A personalised Top 3. Clear first moves. Results
