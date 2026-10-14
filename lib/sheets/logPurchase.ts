@@ -17,7 +17,7 @@ export type PurchaseLogRecord = {
   amountTotal: number;
   currency: string;
   productTier: PaidProductTier;
-  productLabel: "A$19 Standard" | "A$49 Premium";
+  productLabel: "A$47 Standard" | "A$97 Premium";
   paymentStatus: string;
 };
 
@@ -40,8 +40,8 @@ export const PRODUCT_TIER_LABEL: Record<
   PaidProductTier,
   PurchaseLogRecord["productLabel"]
 > = {
-  standard: "A$19 Standard",
-  premium: "A$49 Premium",
+  standard: "A$47 Standard",
+  premium: "A$97 Premium",
 };
 
 function readHttpsLogUrl(env: EnvLike): string | null {

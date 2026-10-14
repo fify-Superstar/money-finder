@@ -64,7 +64,7 @@ const faqs = [
   {
     question: "Which Money Map should I choose?",
     answer:
-      "A$19 is the automated assessment: an instant Top 3 from the matching engine. A$49 is the Personal Money Map: the same engine, plus human review, a tailored 7-day action path, and a 30-day milestone tracker. Neither guarantees income.",
+      "A$47 is the automated assessment: an instant Top 3 from the matching engine. A$97 is the Personal Money Map: the same engine, plus human review, a tailored 7-day action path, and a 30-day milestone tracker. Neither guarantees income.",
   },
 ];
 

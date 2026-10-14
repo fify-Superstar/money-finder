@@ -7,10 +7,10 @@ const record: PurchaseLogRecord = {
   eventId: "evt_test_1",
   sessionId: "cs_test_paidSession123",
   email: "paid@example.test",
-  amountTotal: 4900,
+  amountTotal: 9700,
   currency: "aud",
   productTier: "premium",
-  productLabel: "A$49 Premium",
+  productLabel: "A$97 Premium",
   paymentStatus: "paid",
 };
 
@@ -60,7 +60,7 @@ test("Google Sheets log posts the purchase row to the configured https URL", asy
   assert.equal(result.ok, true);
   assert.equal(url, "https://example.test/sheets-log");
   assert.equal(authorization, "Bearer sheet-token");
-  assert.match(body, /A\$49 Premium/);
+  assert.match(body, /A\$97 Premium/);
   assert.match(body, /cs_test_paidSession123/);
 });
 

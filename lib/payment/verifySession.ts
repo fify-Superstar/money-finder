@@ -4,8 +4,8 @@ import { isCheckoutSessionId } from "./sessionId.ts";
 export { CHECKOUT_SESSION_ID_PATTERN, isCheckoutSessionId } from "./sessionId.ts";
 
 /** Paid access is granted for either product tier, in AUD only. */
-export const STANDARD_AMOUNT_CENTS = 1900;
-export const PREMIUM_AMOUNT_CENTS = 4900;
+export const STANDARD_AMOUNT_CENTS = 4700;
+export const PREMIUM_AMOUNT_CENTS = 9700;
 export const PAID_ACCESS_AMOUNT_CENTS = [
   STANDARD_AMOUNT_CENTS,
   PREMIUM_AMOUNT_CENTS,

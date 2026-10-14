@@ -101,9 +101,9 @@ test("complete route requires Stripe retrieval and does not treat session_id as 
   assert.doesNotMatch(success, /hasRecordedPayment/);
 });
 
-test("handoff source does not hardcode a Stripe Payment Link URL", () => {
-  const source = readFileSync(fileURLToPath(new URL("./handoff.ts", import.meta.url)), "utf8");
-  assert.doesNotMatch(source, /buy\.stripe\.com/);
+test("live handoff uses the current Standard and Premium checkout links", () => {
+  assert.equal(stripeHandoff.paymentLinkUrl, "https://buy.stripe.com/3cI8wQdeocHWg5lbeddnW02");
+  assert.equal(stripeHandoff.premiumPaymentLinkUrl, "https://buy.stripe.com/8x2cN65LW9vK2evbeddnW03");
   assert.equal(typeof stripeHandoff.paymentLinkUrl === "string" || stripeHandoff.paymentLinkUrl === null, true);
   assert.equal(
     typeof stripeHandoff.premiumPaymentLinkUrl === "string" ||

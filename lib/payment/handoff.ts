@@ -9,6 +9,12 @@
  * Do not put secret keys in this file.
  */
 
+/** Current public checkout URLs, deployed with the matching price validation. */
+const CURRENT_PAYMENT_LINKS: EnvLike = {
+  STRIPE_PAYMENT_LINK_URL: "https://buy.stripe.com/3cI8wQdeocHWg5lbeddnW02",
+  STRIPE_PREMIUM_PAYMENT_LINK_URL: "https://buy.stripe.com/8x2cN65LW9vK2evbeddnW03",
+};
+
 export const PAYMENT_SUCCESS_PATH = "/success";
 export const POST_PAYMENT_CONTINUE_PATH = "/assessment";
 export const RESULTS_PATH = "/results";
@@ -19,7 +25,7 @@ export type EnvLike = Record<string, string | undefined>;
 export type StripePaymentHandoffConfig = {
   /** Public Payment Link URL from env. Null means checkout is not connected. */
   paymentLinkUrl: string | null;
-  /** A$49 Personal Money Map Payment Link. Null means the premium tier is not connected. */
+  /** A$97 Personal Money Map Payment Link. Null means the premium tier is not connected. */
   premiumPaymentLinkUrl: string | null;
   successPath: typeof PAYMENT_SUCCESS_PATH;
   cancelPath: typeof PAYMENT_CANCEL_PATH;
@@ -45,19 +51,19 @@ function readHttpsEnvUrl(env: EnvLike, key: string): string | null {
 }
 
 export function readPaymentLinkUrl(
-  env: EnvLike = process.env,
+  env: EnvLike = CURRENT_PAYMENT_LINKS,
 ): string | null {
   return readHttpsEnvUrl(env, "STRIPE_PAYMENT_LINK_URL");
 }
 
 export function readPremiumPaymentLinkUrl(
-  env: EnvLike = process.env,
+  env: EnvLike = CURRENT_PAYMENT_LINKS,
 ): string | null {
   return readHttpsEnvUrl(env, "STRIPE_PREMIUM_PAYMENT_LINK_URL");
 }
 
 export function getStripeHandoffConfig(
-  env: EnvLike = process.env,
+  env: EnvLike = CURRENT_PAYMENT_LINKS,
 ): StripePaymentHandoffConfig {
   return {
     paymentLinkUrl: readPaymentLinkUrl(env),
@@ -70,7 +76,7 @@ export function getStripeHandoffConfig(
 }
 
 /**
- * Live config from process.env. The Payment Link is never hardcoded.
+ * Live public checkout configuration. Explicit env arguments remain available for tests and integrations.
  */
 export const stripeHandoff: StripePaymentHandoffConfig = {
   successPath: PAYMENT_SUCCESS_PATH,

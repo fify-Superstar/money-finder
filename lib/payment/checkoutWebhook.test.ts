@@ -51,11 +51,11 @@ test("checkout webhook rejects an invalid signature", async () => {
   assert.equal(result.body.error, "Invalid signature");
 });
 
-test("checkout webhook logs an A$19 Standard purchase", async () => {
+test("checkout webhook logs an A$47 Standard purchase", async () => {
   const { payload, signature } = signedPayload({
     id: "cs_test_standard19",
     object: "checkout.session",
-    amount_total: 1900,
+    amount_total: 4700,
     currency: "aud",
     payment_status: "paid",
     customer_email: "standard@example.test",
@@ -75,15 +75,15 @@ test("checkout webhook logs an A$19 Standard purchase", async () => {
   assert.equal(result.status, 200);
   assert.equal(logged.length, 1);
   assert.equal(logged[0]?.productTier, "standard");
-  assert.equal(logged[0]?.productLabel, "A$19 Standard");
+  assert.equal(logged[0]?.productLabel, "A$47 Standard");
   assert.equal(logged[0]?.sessionId, "cs_test_standard19");
 });
 
-test("checkout webhook logs an A$49 Premium purchase", async () => {
+test("checkout webhook logs an A$97 Premium purchase", async () => {
   const { payload, signature } = signedPayload({
     id: "cs_test_premium49",
     object: "checkout.session",
-    amount_total: 4900,
+    amount_total: 9700,
     currency: "aud",
     payment_status: "paid",
     customer_details: { email: "premium@example.test" },
@@ -103,7 +103,7 @@ test("checkout webhook logs an A$49 Premium purchase", async () => {
   assert.equal(result.status, 200);
   assert.equal(logged.length, 1);
   assert.equal(logged[0]?.productTier, "premium");
-  assert.equal(logged[0]?.productLabel, "A$49 Premium");
+  assert.equal(logged[0]?.productLabel, "A$97 Premium");
   assert.equal(logged[0]?.email, "premium@example.test");
 });
 
@@ -111,7 +111,7 @@ test("checkout webhook does not log unpaid or unknown-amount sessions", async ()
   const unpaid = signedPayload({
     id: "cs_test_unpaid",
     object: "checkout.session",
-    amount_total: 4900,
+    amount_total: 9700,
     currency: "aud",
     payment_status: "unpaid",
   });
@@ -150,7 +150,7 @@ test("checkout webhook returns 500 when the Google Sheets log fails", async () =
   const { payload, signature } = signedPayload({
     id: "cs_test_premium49",
     object: "checkout.session",
-    amount_total: 4900,
+    amount_total: 9700,
     currency: "aud",
     payment_status: "paid",
   });

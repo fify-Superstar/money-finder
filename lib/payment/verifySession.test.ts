@@ -16,7 +16,7 @@ function snapshot(
     id: PAID_ID,
     status: "complete",
     payment_status: "paid",
-    amount_total: 4900,
+    amount_total: 9700,
     currency: "aud",
     customer_email: "paid@example.test",
     created: 1_700_000_000,
@@ -119,7 +119,7 @@ test("missing STRIPE_SECRET_KEY cannot retrieve a session and is not treated as 
   }
 });
 
-test("valid paid A$49 AUD sessions are accepted", async () => {
+test("valid paid A$97 AUD sessions are accepted", async () => {
   const result = await verifyPaidCheckoutSession(PAID_ID, lookup(snapshot()));
   assert.equal(result.ok, true);
   if (result.ok) {
@@ -129,10 +129,10 @@ test("valid paid A$49 AUD sessions are accepted", async () => {
   }
 });
 
-test("valid paid A$19 AUD sessions are accepted", async () => {
+test("valid paid A$47 AUD sessions are accepted", async () => {
   const result = await verifyPaidCheckoutSession(
     PAID_ID,
-    lookup(snapshot({ amount_total: 1900, currency: "aud" })),
+    lookup(snapshot({ amount_total: 4700, currency: "aud" })),
   );
   assert.equal(result.ok, true);
   if (result.ok) {
@@ -140,26 +140,26 @@ test("valid paid A$19 AUD sessions are accepted", async () => {
   }
 });
 
-test("classifyPaidProductTier maps A$19 and A$49 AUD only", () => {
-  assert.equal(classifyPaidProductTier(1900, "aud"), "standard");
-  assert.equal(classifyPaidProductTier(4900, "AUD"), "premium");
-  assert.equal(classifyPaidProductTier(1900, "usd"), null);
+test("classifyPaidProductTier maps A$47 and A$97 AUD only", () => {
+  assert.equal(classifyPaidProductTier(4700, "aud"), "standard");
+  assert.equal(classifyPaidProductTier(9700, "AUD"), "premium");
+  assert.equal(classifyPaidProductTier(4700, "usd"), null);
   assert.equal(classifyPaidProductTier(2000, "aud"), null);
   assert.equal(classifyPaidProductTier(null, "aud"), null);
 });
 
-test("paid sessions outside the A$19 and A$49 AUD tiers are rejected", async () => {
+test("paid sessions outside the A$47 and A$97 AUD tiers are rejected", async () => {
   const otherAmount = await verifyPaidCheckoutSession(
     PAID_ID,
     lookup(snapshot({ amount_total: 2000, currency: "aud" })),
   );
   const otherCurrency = await verifyPaidCheckoutSession(
     PAID_ID,
-    lookup(snapshot({ amount_total: 4900, currency: "usd" })),
+    lookup(snapshot({ amount_total: 9700, currency: "usd" })),
   );
   const tierOneWrongCurrency = await verifyPaidCheckoutSession(
     PAID_ID,
-    lookup(snapshot({ amount_total: 1900, currency: "usd" })),
+    lookup(snapshot({ amount_total: 4700, currency: "usd" })),
   );
   const missingAmount = await verifyPaidCheckoutSession(
     PAID_ID,

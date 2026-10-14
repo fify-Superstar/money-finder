@@ -36,7 +36,7 @@ function emailFromSession(session: Stripe.Checkout.Session): string | null {
 }
 
 /**
- * Verifies Stripe-Signature, classifies A$19 Standard vs A$49 Premium, and
+ * Verifies Stripe-Signature, classifies A$47 Standard vs A$97 Premium, and
  * forwards paid rows to the Google Sheets log. Does not grant browser access.
  */
 export async function handleCheckoutSessionWebhook(

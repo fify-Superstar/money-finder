@@ -30,7 +30,7 @@ export function PricingTiers({
             Standard
           </p>
           <p className="mt-3 font-display text-3xl tracking-tight text-ink">
-            A$19 Automated Assessment
+            A$47 Automated Assessment
           </p>
           <p className="mt-2 leading-relaxed text-muted">
             After payment, answer 12 questions to receive your personalised Top 3,
@@ -44,7 +44,7 @@ export function PricingTiers({
           <div className="mt-8 flex flex-1 flex-col justify-end gap-4">
             <PaymentClickTracker tier="standard" location={id ?? "homepage_repeat"}>
             <Button href={standardHref} variant="secondary" fullWidth size="lg">
-              Get my Money Map — A$19
+              Get my Money Map — A$47
             </Button>
             </PaymentClickTracker>
             <p className="text-sm leading-relaxed text-muted">{checkoutNote}</p>
@@ -59,7 +59,7 @@ export function PricingTiers({
             Recommended · Premium
           </p>
           <p className="mt-3 font-display text-3xl tracking-tight text-ink">
-            A$49 Personal Money Map
+            A$97 Personal Money Map
           </p>
           <p className="mt-2 leading-relaxed text-muted">
             Same assessment and engine — then a human reviews your answers and
@@ -73,7 +73,7 @@ export function PricingTiers({
           <div className="mt-8 flex flex-1 flex-col justify-end gap-4">
             <PaymentClickTracker tier="premium" location={id ?? "homepage_repeat"}>
             <Button href={premiumHref} fullWidth size="lg">
-              Get the A$49 Personal Money Map
+              Get the A$97 Personal Money Map
             </Button>
             </PaymentClickTracker>
             <p className="text-sm leading-relaxed text-muted">{checkoutNote}</p>
