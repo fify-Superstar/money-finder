@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Container } from "@/components/layout/Container";
 import { PricingTiers } from "@/components/marketing/PricingTiers";
 import { ReferralCapture } from "@/components/share/ReferralCapture";
+import { ShareMoneyMapCta } from "@/components/share/ShareMoneyMapCta";
 
 const steps = [
   {
@@ -396,6 +397,9 @@ export function HomePage({
           </div>
         </Container>
       </section>
+      <Container className="py-12 sm:py-14">
+        <ShareMoneyMapCta />
+      </Container>
     </div>
   );
 }

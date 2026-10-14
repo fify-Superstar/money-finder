@@ -20,6 +20,21 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.moneyfinderapp.com"),
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: "https://www.moneyfinderapp.com/",
+    siteName: "Money Finder",
+    title: "Money Finder — Your personalised Money Map",
+    description: "Your Top 3 income opportunities, why they fit, and practical first steps. Ranked fits, not a promise of income.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Money Finder — Your personalised Money Map",
+    description: "Your Top 3 income opportunities, why they fit, and practical first steps.",
+    images: ["/opengraph-image"],
+  },
   title: "Money Finder — Personalised Money Map",
   description:
     "A personalised Money Map of income opportunities based on your skills, time, budget and goals. Ranked fits, not a promise of income.",
