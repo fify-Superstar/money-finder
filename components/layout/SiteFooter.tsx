@@ -3,7 +3,7 @@ import { Container } from "@/components/layout/Container";
 
 const footerLinks = [
   { href: "/", label: "Home" },
-  { href: "/assessment", label: "Assessment" },
+  { href: "/#pricing", label: "Assessment" },
   { href: "/privacy", label: "Privacy policy" },
   { href: "/terms", label: "Terms of use" },
 ] as const;

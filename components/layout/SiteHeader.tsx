@@ -11,7 +11,7 @@ import { ASSESSMENT_RETAKE_HREF } from "@/lib/assessment/persist";
 const navItems = [
   { href: "/", label: "Home", showOnMobile: true },
   { href: "/#how-it-works", label: "How it works", showOnMobile: true },
-  { href: "/assessment", label: "Assessment", showOnMobile: true },
+  { href: "/#pricing", label: "Assessment", showOnMobile: true },
   { href: "/#share-money-finder", label: "Share", showOnMobile: true },
 ] as const;
 
