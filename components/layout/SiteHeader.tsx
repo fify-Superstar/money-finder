@@ -37,7 +37,7 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
         pathname === "/" && "premium-shell",
       )}
     >
-      <Container className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-3">
+      <Container className="flex flex-col gap-3 py-3 lg:flex-row lg:items-center lg:justify-between sm:py-3">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
@@ -68,7 +68,7 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
             </span>
           </Link>
         </div>
-        <div className="flex flex-wrap items-center justify-between gap-3 sm:justify-end">
+        <div className="flex flex-wrap items-center justify-between gap-3 lg:justify-end">
           <nav aria-label="Primary">
             <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
               {navItems.map((item) => {
