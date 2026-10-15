@@ -1,35 +1,9 @@
 import { exampleMatches } from "@/lib/marketing/exampleMap";
-import type { ReactNode } from "react";
 import { Container } from "@/components/layout/Container";
 import { PricingTiers } from "@/components/marketing/PricingTiers";
 import { ReferralCapture } from "@/components/share/ReferralCapture";
 import { ShareMoneyMapCta } from "@/components/share/ShareMoneyMapCta";
-
-const steps = [
-  {
-    number: "01",
-    title: "Tell us about yourself",
-    body: "A short assessment covering your goal, time, skills, starting budget, working style, technology comfort, risk tolerance, and the extra income you would like.",
-  },
-  {
-    number: "02",
-    title: "We analyse your fit",
-    body: "Your answers are compared with a set of income opportunities using the same matching logic each time — not a generic side-hustle list.",
-  },
-  {
-    number: "03",
-    title: "Get your personalised Money Map",
-    body: "You receive ranked opportunities, why each one fits, and practical first steps. These are matches, not a promise of income.",
-  },
-];
-
-const mapIncludes = [
-  "Ranked opportunities that fit your circumstances",
-  "Match scores so you can see relative fit",
-  "A plain-language explanation of why each one was selected",
-  "Practical first actions you can start with",
-  "Milestones to build toward over time",
-];
+import { Button } from "@/components/ui/Button";
 
 const faqs = [
   {
@@ -69,77 +43,6 @@ const faqs = [
   },
 ];
 
-function SectionSplit({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="grid items-start gap-4 md:grid-cols-3 md:gap-8">
-      <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper md:col-span-1 md:pt-1">
-        {label}
-      </p>
-      <div className="min-w-0 md:col-span-2">{children}</div>
-    </div>
-  );
-}
-
-function ContentFrame({ children }: { children: ReactNode }) {
-  return (
-    <div className="rounded-3xl border border-neutral-200/60 bg-white p-6 shadow-sm sm:p-8">
-      {children}
-    </div>
-  );
-}
-
-const stepBadgeTints = [
-  "bg-moss/12 text-moss",
-  "bg-copper/12 text-copper",
-  "bg-mint-deep/15 text-moss-dark",
-] as const;
-
-function HeroDashboardMockup() {
-  return (
-    <aside
-      className="relative isolate min-h-[22rem] overflow-hidden rounded-[1.75rem] border-2 border-ink shadow-[0_24px_60px_rgba(23,36,28,0.16)] sm:min-h-[26rem]"
-      aria-label="Fictional example Money Map"
-    >
-      <div className="hero-mesh absolute inset-0" />
-      <div className="relative flex h-full flex-col p-5 sm:p-6">
-        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-cream/75">
-          Money Map dashboard
-        </p>
-        <p className="mt-1 font-display text-xl text-cream">
-          Illustrative Top 3
-        </p>
-        <ol className="mt-5 space-y-3">
-          {exampleMatches.map((match) => (
-            <li
-              key={match.rank}
-              className="rounded-2xl border border-cream/15 bg-cream/92 px-4 py-3 shadow-[0_8px_24px_rgba(16,38,27,0.12)]"
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <p className="text-sm font-medium leading-snug text-ink">
-                  <span className="text-muted">Rank {match.rank} · </span>
-                  {match.opportunity.name}
-                </p>
-                <p className="shrink-0 font-display text-lg tabular-nums text-moss">
-                  {match.score}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-auto pt-4 text-[11px] leading-relaxed text-cream/70">
-          Fictional example — your matches depend on your answers.
-        </p>
-      </div>
-    </aside>
-  );
-}
-
 type HomePageProps = {
   standardHref: string;
   premiumHref: string;
@@ -152,253 +55,354 @@ export function HomePage({
   paymentLinked,
 }: HomePageProps) {
   return (
-    <div>
+    <div className="premium-home">
       <ReferralCapture />
-
-      <Container className="pb-12 pt-8 sm:pb-14 sm:pt-12">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          <div className="max-w-[650px]">
-            <p className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-moss">
-              Personalised Money Map
-            </p>
-            <h1 className="font-display text-4xl leading-[1.15] tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              A Money Map of income opportunities that fit your real situation.
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-muted sm:text-xl">
-              Answer a short assessment about your goal, time, skills, budget,
-              and how you like to work. Money Finder turns those answers into a
-              personalised Top 3 Money Map — with scores, explanations, and
-              first steps. It does not guarantee income.
-            </p>
-          </div>
-          <HeroDashboardMockup />
-        </div>
-      </Container>
-
-      <section id="example">
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="Example Money Map">
-            <ContentFrame>
-              <h2 className="font-display max-w-[650px] text-3xl tracking-tight sm:text-4xl">
-                See an example Money Map
-              </h2>
-              <p className="mt-4 max-w-[650px] leading-relaxed text-muted">
-                Example only — your matches depend on your assessment answers.
-                This fictional profile uses the same matching engine as your Money Map.
+      <section className="premium-hero">
+        <Container className="relative py-14 sm:py-20 lg:py-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+            <div>
+              <p className="premium-eyebrow">
+                <span className="inline-block h-2 w-2 rounded-full bg-mint" />{" "}
+                YOUR POTENTIAL. A CLEARER DIRECTION.
               </p>
-              <aside className="mt-8 space-y-5">
-                <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
-                  Alex · fictional profile
-                </p>
-                <p className="text-sm leading-relaxed text-muted">
-                  Writing skills · under 5 hours a week · A$100 starting budget
-                  · project-based work · lower risk tolerance
-                </p>
-                <ol className="space-y-5">
-                  {exampleMatches.map((match) => (
-                    <li
-                      key={match.rank}
-                      className={match.rank === 1 ? "rounded-2xl border border-moss/25 bg-moss/5 p-5" : "border-b border-neutral-200/80 pb-5 last:border-b-0 last:pb-0"}
+              <h1 className="mt-6 text-5xl font-medium leading-[1.06] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
+                Your next income move.
+                <br />
+                <span className="font-display italic text-mint-glow">
+                  Made personal.
+                </span>
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+                Turn your skills, time and starting budget into a personalised
+                Top 3 of income opportunities — with reasons they fit and
+                practical steps to begin.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button href="#pricing" size="lg">
+                  Find my Money Map{" "}
+                  <span aria-hidden="true" className="ml-3">
+                    ↗
+                  </span>
+                </Button>
+                <Button href="#example" variant="secondary" size="lg">
+                  Explore an example
+                </Button>
+              </div>
+              <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted">
+                <span>12 focused questions</span>
+                <span>Built around your situation</span>
+                <span>One-time payment</span>
+              </div>
+              <p className="mt-5 text-xs text-muted">
+                Ranked fits, not a promise of income.
+              </p>
+            </div>
+            <div className="premium-dashboard">
+              <div className="flex items-center justify-between border-b border-line pb-5">
+                <div>
+                  <p className="premium-eyebrow">YOUR MONEY MAP</p>
+                  <p className="mt-2 text-xl">A direction worth exploring.</p>
+                </div>
+                <span aria-hidden="true" className="text-3xl text-mint">
+                  ↗
+                </span>
+              </div>
+              <div className="my-5 flex flex-wrap gap-2">
+                {["Writing skills", "Under 5 hrs / week", "A$100 budget"].map(
+                  (x) => (
+                    <span
+                      key={x}
+                      className="rounded-full border border-line px-3 py-1.5 text-[11px] text-muted"
                     >
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
-                        <p className="font-medium leading-snug">
-                          <span className="text-muted">
-                            Rank {match.rank} ·{" "}
-                          </span>
+                      {x}
+                    </span>
+                  ),
+                )}
+              </div>
+              <ol className="space-y-3">
+                {exampleMatches.map((match) => (
+                  <li
+                    key={match.rank}
+                    className={
+                      match.rank === 1
+                        ? "premium-match premium-match-first"
+                        : "premium-match"
+                    }
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-muted">0{match.rank}</span>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] uppercase tracking-widest text-mint-glow">
+                          {match.rank === 1
+                            ? "Strongest fit"
+                            : "Also worth exploring"}
+                        </p>
+                        <p className="mt-1 text-base font-medium">
                           {match.opportunity.name}
                         </p>
-                        <p className="shrink-0 text-sm text-muted">
-                          Match score {match.score} / 100
-                        </p>
                       </div>
-                      <p className="mt-2 max-w-[650px] text-sm leading-relaxed text-muted">
-                        {match.fits.skill === 1 ? "Uses Alex’s writing skills. " : "Builds on content work. "}
-                        {match.fits.workStyle === 1 ? "Fits project-based work. " : "Offers another way to use those skills. "}
-                        Meets the sample’s starting-budget, time and risk constraints.
+                      <p className="text-2xl tracking-tight">
+                        {match.score}
+                        <span className="text-xs text-muted"> /100</span>
                       </p>
-                      {match.rank === 1 ? (
-                        <p className="mt-3 max-w-[650px] text-sm leading-relaxed">
-                          First actions: {match.opportunity.actions.join(" · ")}.
-                        </p>
-                      ) : null}
-                    </li>
-                  ))}
-                </ol>
-                <p className="max-w-[650px] text-sm leading-relaxed text-muted">
-                  These are ranked fits, not a promise of income.
-                </p>
-              </aside>
-            </ContentFrame>
-          </SectionSplit>
+                    </div>
+                    <div className="mt-4 h-1 overflow-hidden rounded-full bg-white/10">
+                      <div
+                        className="h-full rounded-full bg-mint"
+                        style={{ width: `${match.score}%` }}
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <div className="mt-5 grid grid-cols-3 gap-3 border-t border-line pt-5 text-center text-xs text-muted">
+                <span>Fit scores</span>
+                <span>Clear reasons</span>
+                <span>First actions</span>
+              </div>
+              <p className="mt-4 text-[10px] leading-relaxed text-muted">
+                Illustrative example · Alex, a fictional profile. Your results
+                depend on your answers. Scores measure fit, not earnings
+                potential.
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
-
-      <Container className="pb-12 sm:pb-14">
-        <div className="mt-10">
+      <div className="border-y border-line bg-cream">
+        <Container className="grid gap-6 py-7 sm:grid-cols-3">
+          {[
+            [
+              "01",
+              "Your circumstances first",
+              "Time, budget, skills and goals.",
+            ],
+            [
+              "02",
+              "Your strongest three fits",
+              "Ranked with clear explanations.",
+            ],
+            ["03", "Your next practical steps", "Move from ideas to action."],
+          ].map(([n, title, body]) => (
+            <div key={n} className="flex items-start gap-4">
+              <span className="font-display text-2xl text-mint-glow">{n}</span>
+              <div>
+                <p className="text-sm font-medium">{title}</p>
+                <p className="mt-1 text-xs text-muted">{body}</p>
+              </div>
+            </div>
+          ))}
+        </Container>
+      </div>
+      <section id="how-it-works" className="scroll-mt-24">
+        <Container className="py-16 sm:py-20">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <p className="premium-eyebrow">LESS GUESSWORK. MORE DIRECTION.</p>
+              <h2 className="premium-heading mt-4">
+                A clearer way to find
+                <br />
+                where you could start.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-relaxed text-muted">
+              You bring the real-life details. Money Finder connects them to
+              opportunities that suit your situation.
+            </p>
+          </div>
+          <div className="mt-9 grid gap-4 md:grid-cols-3">
+            {[
+              [
+                "01",
+                "Tell us about you",
+                "Answer 12 focused questions about your skills, available time, budget, goals and working preferences.",
+              ],
+              [
+                "02",
+                "Discover your Top 3",
+                "Our matching engine compares your answers with income opportunities and ranks their fit.",
+              ],
+              [
+                "03",
+                "Make your first move",
+                "Understand why each option fits, then use practical first actions and milestones to explore it.",
+              ],
+            ].map(([n, title, body]) => (
+              <article key={n} className="premium-panel">
+                <p className="text-sm text-mint-glow">
+                  {n}{" "}
+                  <span aria-hidden="true" className="float-right">
+                    ↗
+                  </span>
+                </p>
+                <h3 className="mt-8 text-2xl tracking-tight">{title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+      <section
+        id="example"
+        className="scroll-mt-24 border-y border-line bg-cream"
+      >
+        <Container className="grid items-start gap-10 py-16 sm:py-20 lg:grid-cols-[0.85fr_1.15fr]">
+          <div>
+            <p className="premium-eyebrow">LOOK INSIDE YOUR MONEY MAP</p>
+            <h2 className="premium-heading mt-4">
+              More than an idea.
+              <br />
+              <span className="font-display italic text-mint-glow">
+                A place to begin.
+              </span>
+            </h2>
+            <p className="mt-5 text-muted leading-relaxed">
+              See how one fictional profile becomes a ranked plan. Alex has
+              writing skills, under five hours a week, a A$100 starting budget
+              and a preference for project-based work.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-2">
+              {[
+                "Ranked opportunities",
+                "Fit explanations",
+                "Practical actions",
+                "Planning milestones",
+              ].map((x) => (
+                <span
+                  key={x}
+                  className="rounded-full border border-line px-3 py-2 text-xs text-muted"
+                >
+                  {x}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="space-y-4">
+            {exampleMatches.map((match) => (
+              <article key={match.rank} className="premium-panel">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="premium-eyebrow">RANK 0{match.rank}</p>
+                    <h3 className="mt-2 text-xl">{match.opportunity.name}</h3>
+                  </div>
+                  <p className="shrink-0 text-2xl text-mint-glow">
+                    {match.score}
+                    <span className="text-xs text-muted"> /100</span>
+                  </p>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-muted">
+                  {match.fits.skill === 1
+                    ? "Uses Alex’s writing skills. "
+                    : "Builds on content work. "}
+                  Meets this sample’s time, budget and risk constraints.
+                </p>
+                {match.rank === 1 && (
+                  <div className="mt-5 border-t border-line pt-4">
+                    <p className="text-xs uppercase tracking-widest text-mint-glow">
+                      Your first actions
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm text-muted">
+                      {match.opportunity.actions.map((action) => (
+                        <li key={action} className="flex gap-3">
+                          <span aria-hidden="true" className="text-mint">
+                            ↗
+                          </span>
+                          {action}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </article>
+            ))}
+            <p className="text-xs text-muted">
+              Fictional example using our matching engine. Results are ranked
+              fits, not guaranteed income.
+            </p>
+          </div>
+        </Container>
+      </section>
+      <section id="pricing" className="scroll-mt-24">
+        <Container className="py-16 sm:py-20">
+          <div className="mb-9 text-center">
+            <p className="premium-eyebrow">CHOOSE YOUR NEXT STEP</p>
+            <h2 className="premium-heading mt-4">Clarity, at your pace.</h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted">
+              Start with an automated Money Map, or add a human review and a
+              tailored plan for your first month.
+            </p>
+          </div>
           <PricingTiers
-            id="pricing"
             standardHref={standardHref}
             premiumHref={premiumHref}
             paymentLinked={paymentLinked}
           />
-        </div>
-      </Container>
-
-      <section
-        id="how-it-works"
-        className="border-y border-line/80 bg-cream/60"
-      >
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="How it works">
-            <h2 className="font-display max-w-[650px] text-3xl tracking-tight sm:text-4xl">
-              Three steps to your Money Map
-            </h2>
-            <div className="mt-8 grid gap-8 lg:grid-cols-3">
-              {steps.map((step, index) => (
-                <article key={step.number}>
-                  <p
-                    className={`inline-flex h-11 w-11 items-center justify-center rounded-xl font-display text-sm font-medium ${stepBadgeTints[index]}`}
-                  >
-                    {step.number}
-                  </p>
-                  <h3 className="mt-4 font-display text-2xl tracking-tight">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 max-w-[650px] leading-relaxed text-muted">
-                    {step.body}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </SectionSplit>
         </Container>
       </section>
-
-      <section id="what-you-get">
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="What you get">
-            <h2 className="font-display max-w-[650px] text-3xl tracking-tight sm:text-4xl">
-              A ranked plan you can actually use
+      <section id="faq" className="border-y border-line bg-cream">
+        <Container className="grid gap-10 py-16 sm:py-20 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="premium-eyebrow">A LITTLE MORE CLARITY</p>
+            <h2 className="premium-heading mt-4">
+              Good questions.
+              <br />
+              Straight answers.
             </h2>
-            <p className="mt-4 max-w-[650px] leading-relaxed text-muted">
-              Your Money Map is built from your answers, not a one-size-fits-all
-              list of side hustles. You see why each opportunity was selected
-              and what to do first.
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
+              Money Finder is a starting point for exploring income
+              opportunities. Your results depend on your answers; earnings
+              depend on effort, circumstances and market demand.
             </p>
-            <ul className="mt-8 max-w-[650px] space-y-4">
-              {mapIncludes.map((item) => (
-                <li key={item} className="flex gap-3 text-base leading-relaxed">
+          </div>
+          <div className="divide-y divide-line border-y border-line">
+            {faqs.map((item) => (
+              <details key={item.question} className="group">
+                <summary className="flex min-h-16 cursor-pointer list-none items-center justify-between gap-5 py-5 text-sm font-medium [&::-webkit-details-marker]:hidden">
+                  {item.question}
                   <span
                     aria-hidden="true"
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-moss"
-                  />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-10">
-              <PricingTiers
-                standardHref={standardHref}
-                premiumHref={premiumHref}
-                paymentLinked={paymentLinked}
-              />
-            </div>
-          </SectionSplit>
-        </Container>
-      </section>
-
-      <section id="who-it-is-for" className="border-y border-line/80 bg-cream/40">
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="Who it is for">
-            <ContentFrame>
-              <h2 className="max-w-[650px] font-display text-3xl tracking-tight sm:text-4xl">
-                For people who want realistic options, not a generic hustle
-                list.
-              </h2>
-              <p className="mt-5 max-w-[650px] text-lg leading-relaxed text-muted">
-                Money Finder is useful if you want to see which income
-                opportunities fit the time, budget, skills, and risk you
-                actually have — instead of scrolling through ideas that ignore
-                those constraints. It is not a job board, an investment product,
-                or a get-rich system.
-              </p>
-            </ContentFrame>
-          </SectionSplit>
-        </Container>
-      </section>
-
-      <section id="expectations" className="border-y border-line/80 bg-cream/60">
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="Trust and expectations">
-            <ContentFrame>
-              <h2 className="max-w-[650px] font-display text-3xl tracking-tight sm:text-4xl">
-                These are ranked fits based on your answers, not a promise of
-                income.
-              </h2>
-              <p className="mt-5 max-w-[650px] text-lg leading-relaxed text-muted">
-                What you earn — if anything — depends on your circumstances, the
-                effort you put in, market demand, and many factors Money Finder
-                cannot control. Use the map as a starting point, not as
-                financial advice or a guarantee of work.
-              </p>
-            </ContentFrame>
-          </SectionSplit>
-        </Container>
-      </section>
-
-      <section id="faq">
-        <Container className="py-12 sm:py-14">
-          <SectionSplit label="FAQ">
-            <h2 className="font-display max-w-[650px] text-3xl tracking-tight sm:text-4xl">
-              Common questions
-            </h2>
-            <div className="mt-8 max-w-[650px] divide-y divide-line/80 border-y border-line/80">
-              {faqs.map((item) => (
-                <details key={item.question} className="group py-2">
-                  <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-3 font-medium [&::-webkit-details-marker]:hidden">
-                    <span>{item.question}</span>
-                    <span
-                      aria-hidden="true"
-                      className="shrink-0 text-moss group-open:rotate-45"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="max-w-[650px] pb-4 leading-relaxed text-muted">
-                    {item.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </SectionSplit>
-        </Container>
-      </section>
-
-      <section
-        id="get-started"
-        className="border-t border-neutral-200/70 bg-white"
-      >
-        <Container className="py-12 sm:py-14">
-          <div className="max-w-[650px]">
-            <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
-              Get your personalised Money Map
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted">
-              Twelve questions. A personalised Top 3. Clear first moves. Results
-              are matches, not guaranteed income.
-            </p>
-          </div>
-          <div className="mt-10">
-            <PricingTiers
-              standardHref={standardHref}
-              premiumHref={premiumHref}
-              paymentLinked={paymentLinked}
-            />
+                    className="text-xl text-mint group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="pb-5 text-sm leading-relaxed text-muted">
+                  {item.answer}
+                </p>
+              </details>
+            ))}
           </div>
         </Container>
       </section>
-      <Container className="py-12 sm:py-14">
-        <ShareMoneyMapCta />
+      <Container className="py-16 sm:py-20">
+        <div className="premium-closing p-8 text-center sm:p-14">
+          <p className="premium-eyebrow">
+            YOUR NEXT CHAPTER STARTS WITH A DIRECTION
+          </p>
+          <h2 className="premium-heading mx-auto mt-5 max-w-2xl">
+            You have possibilities.
+            <br />
+            <span className="font-display italic text-mint-glow">
+              Find the ones that fit.
+            </span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-lg text-muted">
+            Twelve questions. Your personalised Top 3. Practical first moves.
+          </p>
+          <div className="mt-7">
+            <Button href="#pricing" size="lg">
+              Find my Money Map ↗
+            </Button>
+          </div>
+          <p className="mt-5 text-xs text-muted">
+            One-time payment · Ranked fits, not a promise of income.
+          </p>
+        </div>
+        <div className="mt-10">
+          <ShareMoneyMapCta />
+        </div>
       </Container>
     </div>
   );

@@ -12,6 +12,7 @@ const navItems = [
   { href: "/", label: "Home", showOnMobile: true },
   { href: "/#how-it-works", label: "How it works", showOnMobile: false },
   { href: "/assessment", label: "Assessment", showOnMobile: true },
+  { href: "/#share-money-finder", label: "Share ↗", showOnMobile: true },
 ] as const;
 
 type SiteHeaderProps = {
@@ -21,8 +22,7 @@ type SiteHeaderProps = {
 
 export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
   const pathname = usePathname() ?? "";
-  const onResults =
-    pathname === "/results" || pathname.startsWith("/results/");
+  const onResults = pathname === "/results" || pathname.startsWith("/results/");
   const ctaHref = onResults ? ASSESSMENT_RETAKE_HREF : startHref;
   const ctaLabel = onResults
     ? "Retake assessment"
@@ -31,12 +31,17 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
       : "Start the assessment";
 
   return (
-    <header className="border-b border-line/80">
-      <Container className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:py-6">
+    <header
+      className={cn(
+        "border-b border-line/80",
+        pathname === "/" && "premium-shell",
+      )}
+    >
+      <Container className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-3">
         <div className="flex items-center justify-between gap-4">
           <Link
             href="/"
-            className="inline-flex items-center"
+            className="inline-flex items-center gap-3"
             aria-label="Money Finder home"
           >
             <Image
@@ -44,25 +49,26 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
               alt="Money Finder"
               width={512}
               height={512}
-              className="h-32 w-auto max-h-32 sm:h-36 sm:max-h-36"
+              className="h-16 w-16 object-contain sm:h-20 sm:w-20"
               style={{
                 width: "auto",
                 height: "auto",
-                maxHeight: 144,
+                maxHeight: 80,
                 filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.1))",
               }}
-              sizes="(min-width: 640px) 144px, 128px"
+              sizes="(min-width: 640px) 80px, 64px"
               unoptimized
               priority
             />
+            <span className="text-lg font-medium tracking-tight sm:text-xl">
+              Money Finder
+              <span className="block text-[9px] font-normal uppercase tracking-[0.18em] text-muted">
+                Your personalised Money Map
+              </span>
+            </span>
           </Link>
-          <div className="sm:hidden">
-            <Button href={ctaHref} size="sm">
-              {ctaLabel}
-            </Button>
-          </div>
         </div>
-        <div className="flex items-center justify-between gap-6 sm:justify-end">
+        <div className="flex flex-wrap items-center justify-between gap-3 sm:justify-end">
           <nav aria-label="Primary">
             <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
               {navItems.map((item) => {
@@ -76,7 +82,9 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
                 return (
                   <li
                     key={item.href}
-                    className={item.showOnMobile ? undefined : "hidden sm:list-item"}
+                    className={
+                      item.showOnMobile ? undefined : "hidden sm:list-item"
+                    }
                   >
                     <Link
                       href={item.href}
@@ -95,7 +103,7 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
               })}
             </ul>
           </nav>
-          <div className="hidden sm:block">
+          <div className="block">
             <Button href={ctaHref} size="sm">
               {ctaLabel}
             </Button>

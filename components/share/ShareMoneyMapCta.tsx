@@ -2,7 +2,11 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { publicShareUrl, SHARE_TEXT, socialShareLinks } from "@/lib/share/social";
+import {
+  publicShareUrl,
+  SHARE_TEXT,
+  socialShareLinks,
+} from "@/lib/share/social";
 
 type ShareMoneyMapCtaProps = {
   inviteUrl?: string | null;
@@ -30,53 +34,112 @@ export function ShareMoneyMapCta({ inviteUrl = null }: ShareMoneyMapCtaProps) {
   async function shareMore() {
     if (typeof navigator.share === "function") {
       try {
-        await navigator.share({ title: "Money Finder", text: SHARE_TEXT, url: shareUrl });
+        await navigator.share({
+          title: "Money Finder",
+          text: SHARE_TEXT,
+          url: shareUrl,
+        });
         return;
       } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") return;
+        if (error instanceof DOMException && error.name === "AbortError")
+          return;
       }
     }
     await copy(shareUrl, "Link copied. Paste it into your favourite app.");
   }
 
   return (
-    <aside id="share-money-finder" className="rounded-3xl border border-line bg-cream/70 px-6 py-8">
-      <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper">Share Money Finder</p>
-      <h2 className="mt-2 font-display text-2xl tracking-tight">Know someone looking for a starting point?</h2>
+    <aside
+      id="share-money-finder"
+      className="rounded-3xl border border-line bg-cream/70 px-6 py-8"
+    >
+      <p className="text-sm font-medium uppercase tracking-[0.16em] text-copper">
+        Share Money Finder
+      </p>
+      <h2 className="mt-2 font-display text-2xl tracking-tight">
+        Know someone looking for a starting point?
+      </h2>
       <p className="mt-3 max-w-2xl leading-relaxed text-muted">
         Send them Money Finder so they can explore their own fit. Your answers,
         payment details and personal results stay private.
       </p>
-      <div className="mt-6 flex flex-wrap gap-3" aria-label="Share on social media">
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button type="button" size="lg" onClick={() => void shareMore()}>
+          Share Money Finder ↗
+        </Button>
+        <Button
+          type="button"
+          variant="secondary"
+          size="lg"
+          onClick={() =>
+            void copy(shareUrl, "Link copied. Ready to share in any app.")
+          }
+        >
+          Copy link
+        </Button>
+      </div>
+      <p className="mt-5 text-xs font-medium uppercase tracking-widest text-muted">
+        Or choose a platform
+      </p>
+      <div
+        className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4"
+        aria-label="Share on social media"
+      >
         {socialShareLinks(inviteUrl).map(({ name, href }) => (
-          <a key={name} href={href} target="_blank" rel="noopener noreferrer"
+          <a
+            key={name}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
             aria-label={`Share Money Finder on ${name} (opens a new tab)`}
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-5 py-3 text-sm font-medium text-ink transition hover:border-moss hover:text-moss focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss">
+            className="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-cream px-5 py-3 text-sm font-medium text-ink transition hover:border-moss hover:text-moss focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+          >
             {name}
           </a>
         ))}
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
-        <Button type="button" onClick={() => void copy(shareUrl, "Link copied.")}>Copy link</Button>
-        <Button type="button" variant="secondary" onClick={() => void copy(`${SHARE_TEXT}\n\n${shareUrl}`, "Caption and link copied.")}>Copy caption</Button>
-        <Button type="button" variant="secondary" onClick={() => void shareMore()}>More apps</Button>
-        <a href="/opengraph-image" download="Money-Finder-share.png"
-          className="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-white px-6 py-3 font-medium text-ink hover:border-moss focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss">
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={() =>
+            void copy(
+              `${SHARE_TEXT}\n\n${shareUrl}`,
+              "Caption and link copied.",
+            )
+          }
+        >
+          Copy caption
+        </Button>
+        <a
+          href="/opengraph-image"
+          download="Money-Finder-share.png"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-line bg-cream px-6 py-3 font-medium text-ink hover:border-moss focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss"
+        >
           Download share image
         </a>
       </div>
       <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
-        Instagram or Messenger? Download the image, copy the caption, then add them
-        in your app. For Instagram Stories, add a link sticker to moneyfinderapp.com.
+        Instagram, Messenger, TikTok or another app? Use Share Money Finder to
+        open your device’s sharing menu where supported. You can also copy the
+        link or download the image and copy the caption to post yourself. In
+        Instagram Stories, add the website with a link sticker.
       </p>
       <p className="mt-3 break-all text-sm text-muted">{shareUrl}</p>
-      <p role="status" aria-live="polite" className="mt-3 text-sm text-moss">{status}</p>
+      <p role="status" aria-live="polite" className="mt-3 text-sm text-moss">
+        {status}
+      </p>
       {manualCopy ? (
         <label className="mt-3 block text-sm">
           Copy this text
-          <textarea ref={copyField} readOnly value={manualCopy} rows={4}
+          <textarea
+            ref={copyField}
+            readOnly
+            value={manualCopy}
+            rows={4}
             onFocus={() => copyField.current?.select()}
-            className="mt-2 w-full rounded-xl border border-line bg-white p-3" />
+            className="mt-2 w-full rounded-xl border border-line bg-cream p-3"
+          />
         </label>
       ) : null}
     </aside>

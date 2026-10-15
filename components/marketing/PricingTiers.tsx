@@ -29,12 +29,16 @@ export function PricingTiers({
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-muted">
             Standard
           </p>
-          <p className="mt-3 font-display text-3xl tracking-tight text-ink">
-            A$47 Automated Assessment
+          <p className="mt-3 text-5xl font-medium tracking-tight text-ink">
+            A$47{" "}
+            <span className="text-sm font-normal tracking-normal text-muted">
+              one-time
+            </span>
           </p>
+          <h3 className="mt-5 text-xl font-medium">Automated Money Map</h3>
           <p className="mt-2 leading-relaxed text-muted">
-            After payment, answer 12 questions to receive your personalised Top 3,
-            with match scores, reasons and practical first actions.
+            After payment, answer 12 questions to receive your personalised Top
+            3, with match scores, reasons and practical first actions.
           </p>
           <ul className="mt-6 space-y-3 text-sm leading-relaxed">
             <li>Ranked Top 3, scores, and why each one fits</li>
@@ -42,25 +46,34 @@ export function PricingTiers({
             <li>You plan the week yourself</li>
           </ul>
           <div className="mt-8 flex flex-1 flex-col justify-end gap-4">
-            <PaymentClickTracker tier="standard" location={id ?? "homepage_repeat"}>
-            <Button href={standardHref} variant="secondary" fullWidth size="lg">
-              Get my Money Map — A$47
-            </Button>
+            <PaymentClickTracker
+              tier="standard"
+              location={id ?? "homepage_repeat"}
+            >
+              <Button
+                href={standardHref}
+                variant="secondary"
+                fullWidth
+                size="lg"
+              >
+                Get my Money Map — A$47
+              </Button>
             </PaymentClickTracker>
             <p className="text-sm leading-relaxed text-muted">{checkoutNote}</p>
           </div>
         </Card>
 
-        <Card
-          elevated
-          className="flex h-full flex-col border-moss/35 bg-cream"
-        >
+        <Card elevated className="flex h-full flex-col border-moss/35 bg-cream">
           <p className="text-sm font-medium uppercase tracking-[0.16em] text-moss">
             Recommended · Premium
           </p>
-          <p className="mt-3 font-display text-3xl tracking-tight text-ink">
-            A$97 Personal Money Map
+          <p className="mt-3 text-5xl font-medium tracking-tight text-ink">
+            A$97{" "}
+            <span className="text-sm font-normal tracking-normal text-muted">
+              one-time
+            </span>
           </p>
+          <h3 className="mt-5 text-xl font-medium">Personal Money Map</h3>
           <p className="mt-2 leading-relaxed text-muted">
             Same assessment and engine — then a human reviews your answers and
             writes the first month around your Rank 1 fit.
@@ -71,10 +84,13 @@ export function PricingTiers({
             <li>Tailored 30-day milestone tracker</li>
           </ul>
           <div className="mt-8 flex flex-1 flex-col justify-end gap-4">
-            <PaymentClickTracker tier="premium" location={id ?? "homepage_repeat"}>
-            <Button href={premiumHref} fullWidth size="lg">
-              Get the A$97 Personal Money Map
-            </Button>
+            <PaymentClickTracker
+              tier="premium"
+              location={id ?? "homepage_repeat"}
+            >
+              <Button href={premiumHref} fullWidth size="lg">
+                Get the A$97 Personal Money Map
+              </Button>
             </PaymentClickTracker>
             <p className="text-sm leading-relaxed text-muted">{checkoutNote}</p>
           </div>

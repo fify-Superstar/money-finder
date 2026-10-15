@@ -51,3 +51,122 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* The marketing theme is scoped so assessment and payment screens retain their established UI. */
+.premium-home,
+.premium-shell {
+  --color-paper: #080f10;
+  --color-cream: #0e191a;
+  --color-ink: #f2f5ef;
+  --color-muted: #adbcba;
+  --color-line: #283a3a;
+  --color-moss: #95efc1;
+  --color-moss-dark: #b6f7d6;
+  --color-copper: #cbb58b;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+.premium-home {
+  overflow: clip;
+}
+.premium-shell {
+  background: #0b1314;
+}
+.premium-home a:focus-visible,
+.premium-home summary:focus-visible {
+  outline: 2px solid #95efc1;
+  outline-offset: 5px;
+}
+.premium-home a.bg-moss,
+.premium-shell a.bg-moss {
+  color: #09261c;
+  border-color: #95efc1;
+  box-shadow: 0 8px 28px #58dba51a;
+}
+.premium-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  line-height: 1.6;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: #a5d7c2;
+}
+.text-center .premium-eyebrow {
+  justify-content: center;
+}
+.premium-heading {
+  font-size: clamp(2rem, 3.7vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+}
+.premium-hero {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 85% 40%, #1b654737, transparent 58%),
+    linear-gradient(130deg, #080f10, #101c1d);
+}
+.premium-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.2;
+  background-image:
+    linear-gradient(#95efc112 1px, transparent 1px),
+    linear-gradient(90deg, #95efc112 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to right, transparent, black);
+  pointer-events: none;
+}
+.premium-dashboard {
+  position: relative;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid #517565;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #20352fdd, #101b1bee);
+  box-shadow:
+    0 30px 90px #0006,
+    0 0 70px #42d58d0d;
+}
+.premium-match {
+  border: 1px solid #32453f;
+  border-radius: 14px;
+  padding: 18px;
+  background: #0e1a19;
+}
+.premium-match-first {
+  border-color: #7acf9d88;
+  background: linear-gradient(120deg, #234738, #152a24);
+}
+.premium-panel {
+  border: 1px solid #2b3b39;
+  border-radius: 20px;
+  padding: clamp(22px, 3vw, 32px);
+  background: linear-gradient(140deg, #152220, #0f1919);
+}
+.premium-closing {
+  border: 1px solid #405c4f;
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at 50% 110%, #327b4b44, transparent 75%), #101c19;
+}
+.premium-home section {
+  scroll-margin-top: 30px;
+}
+.premium-home #pricing .bg-cream {
+  background: linear-gradient(145deg, #162622, #101c1a);
+}
+.premium-home #pricing .border-moss\/35 {
+  border-color: #7acf9d88;
+  box-shadow: 0 0 40px #76dca70a;
+}
+@media (max-width: 639px) {
+  .premium-shell nav ul {
+    gap: 20px;
+  }
+  .premium-dashboard {
+    border-radius: 18px;
+  }
+}
