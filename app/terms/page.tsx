@@ -13,10 +13,10 @@ export default function TermsPage() {
     <Container className="py-12 sm:py-16">
       <PageHeader
         eyebrow="Money Finder"
-        title="Terms"
+        title="Terms of use"
         description="These notes describe how the current Money Finder site is meant to be used. They are not a lawyer-reviewed contract and are not legal advice."
       />
-      <div className="max-w-2xl space-y-6 leading-relaxed text-muted">
+      <div className="legal-copy space-y-6 leading-relaxed text-muted">
         <p>
           Money Finder provides a personalised Money Map: ranked income
           opportunity matches based on your assessment answers, with scores,
@@ -34,11 +34,10 @@ export default function TermsPage() {
           in the browser session unless a later delivery method is added.
         </p>
         <p>
-          If payment is connected, access to the assessment may require a
-          completed, paid Stripe checkout that this site verifies on the
-          server. Unpaid visits are not entitled to paid access. Demo or
-          pre-launch builds may allow the assessment without a charge; that
-          does not create a paid entitlement.
+          Access to the assessment and personalised scores requires a completed,
+          paid Stripe checkout that this site verifies on the server. Unpaid
+          visits are not entitled to paid access. The public homepage shows a
+          clearly labelled fictional example, not personal results.
         </p>
         <p>
           The site may change as the product develops. If these terms conflict

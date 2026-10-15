@@ -17,10 +17,12 @@ export async function middleware(request: NextRequest) {
   );
 
   if (!allowed) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/unlock", request.url));
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+  response.headers.set("Cache-Control", "private, no-store");
+  return response;
 }
 
 export const config = {

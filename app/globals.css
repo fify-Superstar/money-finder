@@ -3,18 +3,18 @@
 @theme {
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-newsreader), ui-serif, Georgia, serif;
-  --color-paper: #f3eee4;
-  --color-cream: #fffaf2;
-  --color-ink: #17241c;
-  --color-moss: #1d5a3e;
-  --color-moss-dark: #143d2a;
+  --color-paper: #080f10;
+  --color-cream: #0e191a;
+  --color-ink: #f2f5ef;
+  --color-moss: #95efc1;
+  --color-moss-dark: #b6f7d6;
   --color-mint: #3dffa6;
   --color-mint-glow: #9bffd4;
   --color-mint-deep: #12c98d;
-  --color-copper: #c45c26;
-  --color-muted: #5a6b61;
-  --color-line: #d9d0c1;
-  --color-danger: #8f2d2d;
+  --color-copper: #cbb58b;
+  --color-muted: #adbcba;
+  --color-line: #283a3a;
+  --color-danger: #ffaaaa;
   --radius-pill: 999px;
   --radius-card: 1.5rem;
   --color-snow: #ffffff;
@@ -168,5 +168,94 @@ body {
   }
   .premium-dashboard {
     border-radius: 18px;
+  }
+}
+
+/* Shared product finish: marketing, checkout return, paid workspace and legal pages. */
+body {
+  color-scheme: dark;
+}
+::selection {
+  background: #95efc1;
+  color: #09261c;
+}
+body > div {
+  background:
+    radial-gradient(ellipse at 100% 0%, #173e2c22, transparent 48%), #080f10;
+}
+.site-navigation {
+  padding: 6px;
+  border: 1px solid #32443e;
+  border-radius: 18px;
+  background: #101d1a;
+}
+.site-navigation a {
+  border: 1px solid transparent;
+  border-radius: 12px;
+  padding: 11px 15px;
+  color: #d7e3dc;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+.site-navigation a:hover {
+  background: #203b2c;
+  border-color: #608a70;
+}
+.site-navigation a[aria-current="page"] {
+  background: #95efc1;
+  border-color: #95efc1;
+  color: #09261c;
+}
+.site-navigation a:focus-visible {
+  outline: 2px solid #95efc1;
+  outline-offset: 3px;
+}
+.workspace-heading {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid #324b40;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 95% 0%, #32633a44, transparent 70%), #12201b;
+}
+.legal-copy {
+  max-width: 52rem;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid #283a3a;
+  border-radius: 24px;
+  background: #0e191a;
+}
+.legal-copy p + p {
+  padding-top: 22px;
+  border-top: 1px solid #283a3a;
+}
+input,
+textarea {
+  color-scheme: dark;
+}
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: #95efc1;
+}
+footer {
+  background: #0b1412;
+}
+@media (max-width: 639px) {
+  .site-navigation {
+    width: 100%;
+  }
+  .site-navigation ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .site-navigation a {
+    display: flex;
+    justify-content: center;
+    padding: 12px 8px;
   }
 }

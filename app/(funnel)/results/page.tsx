@@ -1,3 +1,4 @@
+import { requirePaidAccess } from "@/lib/payment/requirePaidAccess";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { Container } from "@/components/layout/Container";
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
     "Your personalised Top 3 Money Map will appear here after the assessment is complete.",
 };
 
-export default function ResultsPage() {
+export default async function ResultsPage() {
+  await requirePaidAccess();
   return (
     <Container className="space-y-8 py-12 sm:py-16">
       <PageHeader

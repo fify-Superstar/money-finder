@@ -10,9 +10,9 @@ import { ASSESSMENT_RETAKE_HREF } from "@/lib/assessment/persist";
 
 const navItems = [
   { href: "/", label: "Home", showOnMobile: true },
-  { href: "/#how-it-works", label: "How it works", showOnMobile: false },
+  { href: "/#how-it-works", label: "How it works", showOnMobile: true },
   { href: "/assessment", label: "Assessment", showOnMobile: true },
-  { href: "/#share-money-finder", label: "Share ↗", showOnMobile: true },
+  { href: "/#share-money-finder", label: "Share", showOnMobile: true },
 ] as const;
 
 type SiteHeaderProps = {
@@ -33,8 +33,8 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
   return (
     <header
       className={cn(
-        "border-b border-line/80",
-        pathname === "/" && "premium-shell",
+        "border-b border-line/80 lg:sticky lg:top-0 z-40",
+        "premium-shell",
       )}
     >
       <Container className="flex flex-col gap-3 py-3 lg:flex-row lg:items-center lg:justify-between sm:py-3">
@@ -69,8 +69,8 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
           </Link>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 lg:justify-end">
-          <nav aria-label="Primary">
-            <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+          <nav aria-label="Primary" className="site-navigation">
+            <ul className="flex flex-wrap gap-1 text-sm">
               {navItems.map((item) => {
                 const pathOnly = item.href.split("#")[0] || "/";
                 const current =
@@ -89,7 +89,7 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
                     <Link
                       href={item.href}
                       className={cn(
-                        "inline-flex min-h-11 items-center border-b-2",
+                        "inline-flex min-h-11 items-center",
                         current
                           ? "border-moss font-medium text-ink"
                           : "border-transparent text-muted hover:text-ink",

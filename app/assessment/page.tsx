@@ -1,3 +1,4 @@
+import { requirePaidAccess } from "@/lib/payment/requirePaidAccess";
 import type { Metadata } from "next";
 import { AssessmentWorkspace } from "@/components/assessment/AssessmentWorkspace";
 import { Container } from "@/components/layout/Container";
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
     "Answer 12 questions to receive a personalised Top 3 Money Map. Results are matches, not guaranteed income.",
 };
 
-export default function AssessmentPage() {
+export default async function AssessmentPage() {
+  await requirePaidAccess();
   return (
     <Container className="py-12 sm:py-16">
       <PageHeader

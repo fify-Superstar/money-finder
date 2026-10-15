@@ -3,7 +3,7 @@ import {
   readAccessSigningSecret,
   verifyAccessToken,
 } from "./accessCookie.ts";
-import { readPaymentLinkUrl, readPremiumPaymentLinkUrl, type EnvLike } from "./handoff.ts";
+import { type EnvLike } from "./handoff.ts";
 import { isCheckoutSessionId } from "./sessionId.ts";
 
 export function isProtectedPath(pathname: string): boolean {
@@ -13,10 +13,6 @@ export function isProtectedPath(pathname: string): boolean {
     pathname === "/results" ||
     pathname.startsWith("/results/")
   );
-}
-
-export function isPaymentGatingEnabled(env: EnvLike = process.env): boolean {
-  return Boolean(readPaymentLinkUrl(env) || readPremiumPaymentLinkUrl(env));
 }
 
 export function readAccessCookieValue(
@@ -35,7 +31,11 @@ export function readAccessCookieValue(
 
     const name = trimmed.slice(0, separator);
     if (name === ACCESS_COOKIE_NAME) {
-      return decodeURIComponent(trimmed.slice(separator + 1));
+      try {
+        return decodeURIComponent(trimmed.slice(separator + 1));
+      } catch {
+        return undefined;
+      }
     }
   }
 
@@ -73,11 +73,7 @@ export function checkoutReturnPath(
   return `/success?session_id=${encodeURIComponent(id)}`;
 }
 
-/**
- * Returns true when the request may proceed.
- * Demo mode (no Payment Link) stays open. Payment mode fails closed
- * without a valid signed cookie — including when the signing secret is missing.
- */
+/** Paid routes always require a valid signed entitlement, even if checkout configuration is missing. */
 export async function allowProtectedRequest(
   pathname: string,
   cookieHeader: string | null | undefined,
@@ -88,10 +84,5 @@ export async function allowProtectedRequest(
     return true;
   }
 
-  if (!isPaymentGatingEnabled(env)) {
-    return true;
-  }
-
   return hasValidAccessCookie(cookieHeader, env, nowMs);
 }
-

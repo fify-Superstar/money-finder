@@ -19,9 +19,9 @@ export type IncomeMilestoneSeries = {
 };
 
 export const INCOME_SERIES_COLORS = {
-  rank1: "#1d5a3e",
+  rank1: "#95efc1",
   rank2: "#12c98d",
-  rank3: "#c45c26",
+  rank3: "#d6b77b",
 } as const;
 
 function listedMonthly(match: MoneyMapMatch): number {
@@ -67,7 +67,7 @@ export function buildIncomeMilestoneSeries(
     .filter((match) => match.rank >= 1 && match.rank <= 3)
     .sort((a, b) => a.rank - b.rank)
     .map((match) => {
-      const key = (`rank${match.rank}` as IncomeMilestoneSeries["key"]);
+      const key = `rank${match.rank}` as IncomeMilestoneSeries["key"];
       return {
         key,
         rank: match.rank,

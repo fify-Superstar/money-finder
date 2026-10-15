@@ -49,7 +49,7 @@ test("income milestone series uses rank colours for the Top 3", () => {
   ]);
 
   assert.equal(series[0]?.key, "rank1");
-  assert.equal(series[0]?.color, "#1d5a3e");
+  assert.equal(series[0]?.color, "#95efc1");
   assert.equal(series[1]?.key, "rank2");
   assert.equal(series[1]?.color, "#12c98d");
 });

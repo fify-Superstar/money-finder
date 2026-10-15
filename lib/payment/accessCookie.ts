@@ -35,9 +35,7 @@ export function readAccessSigningSecret(
   return secret || null;
 }
 
-export function requireAccessSigningSecret(
-  env: EnvLike = process.env,
-): string {
+export function requireAccessSigningSecret(env: EnvLike = process.env): string {
   const secret = readAccessSigningSecret(env);
   if (secret) {
     return secret;
@@ -71,7 +69,10 @@ function bytesToBase64Url(bytes: Uint8Array): string {
   for (const byte of bytes) {
     binary += String.fromCharCode(byte);
   }
-  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+  return btoa(binary)
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/g, "");
 }
 
 function base64UrlToBytes(value: string): Uint8Array {
@@ -104,7 +105,10 @@ function timingSafeEqual(left: Uint8Array, right: Uint8Array): boolean {
   return diff === 0;
 }
 
-async function hmacSha256Base64Url(secret: string, message: string): Promise<string> {
+async function hmacSha256Base64Url(
+  secret: string,
+  message: string,
+): Promise<string> {
   const key = await crypto.subtle.importKey(
     "raw",
     new TextEncoder().encode(secret),
@@ -155,13 +159,15 @@ export async function verifyAccessToken(
     return null;
   }
 
-  const message = `${version}.${body}`;
-  const expected = await hmacSha256Base64Url(secret, message);
-  if (!timingSafeEqual(base64UrlToBytes(signature), base64UrlToBytes(expected))) {
-    return null;
-  }
-
   try {
+    const message = `${version}.${body}`;
+    const expected = await hmacSha256Base64Url(secret, message);
+    if (
+      !timingSafeEqual(base64UrlToBytes(signature), base64UrlToBytes(expected))
+    ) {
+      return null;
+    }
+
     const parsed: unknown = JSON.parse(base64UrlToUtf8(body));
     if (typeof parsed !== "object" || parsed === null) {
       return null;

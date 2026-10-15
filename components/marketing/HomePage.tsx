@@ -100,8 +100,8 @@ export function HomePage({
             <div className="premium-dashboard">
               <div className="flex items-center justify-between border-b border-line pb-5">
                 <div>
-                  <p className="premium-eyebrow">YOUR MONEY MAP</p>
-                  <p className="mt-2 text-xl">A direction worth exploring.</p>
+                  <p className="premium-eyebrow">FICTIONAL EXAMPLE MONEY MAP</p>
+                  <p className="mt-2 text-xl">Alex’s sample matches.</p>
                 </div>
                 <span aria-hidden="true" className="text-3xl text-mint">
                   ↗
@@ -250,7 +250,9 @@ export function HomePage({
       >
         <Container className="grid items-start gap-10 py-16 sm:py-20 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
-            <p className="premium-eyebrow">LOOK INSIDE YOUR MONEY MAP</p>
+            <p className="premium-eyebrow">
+              LOOK INSIDE FICTIONAL EXAMPLE MONEY MAP
+            </p>
             <h2 className="premium-heading mt-4">
               More than an idea.
               <br />
@@ -260,7 +262,7 @@ export function HomePage({
             </h2>
             <p className="mt-5 text-muted leading-relaxed">
               See how one fictional profile becomes a ranked plan. Alex has
-              writing skills, under five hours a week, a A$100 starting budget
+              writing skills, under five hours a week, an A$100 starting budget
               and a preference for project-based work.
             </p>
             <div className="mt-7 flex flex-wrap gap-2">
@@ -301,7 +303,7 @@ export function HomePage({
                 {match.rank === 1 && (
                   <div className="mt-5 border-t border-line pt-4">
                     <p className="text-xs uppercase tracking-widest text-mint-glow">
-                      Your first actions
+                      Alex’s example first actions
                     </p>
                     <ul className="mt-3 space-y-2 text-sm text-muted">
                       {match.opportunity.actions.map((action) => (

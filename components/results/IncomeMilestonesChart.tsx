@@ -23,11 +23,7 @@ const AUD = new Intl.NumberFormat("en-AU", {
   maximumFractionDigits: 0,
 });
 
-function ChartTooltip({
-  active,
-  payload,
-  label,
-}: TooltipContentProps) {
+function ChartTooltip({ active, payload, label }: TooltipContentProps) {
   if (!active || !payload?.length) {
     return null;
   }
@@ -88,8 +84,7 @@ export function IncomeMilestonesChart({ matches }: IncomeMilestonesChartProps) {
       <p className="mt-3 max-w-[650px] leading-relaxed text-muted">
         This chart ramps the listed monthly ranges from your ranked fits over
         twelve months, weighted by match score. It is a planning sketch of
-        listed opportunity ranges — not a forecast, and not a promise of
-        income.
+        listed opportunity ranges — not a forecast, and not a promise of income.
       </p>
 
       <div className="mt-8 h-72 w-full min-w-0 sm:h-80">
@@ -101,34 +96,34 @@ export function IncomeMilestonesChart({ matches }: IncomeMilestonesChartProps) {
             >
               <defs>
                 <linearGradient id="rank1Fill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#1d5a3e" stopOpacity={0.28} />
-                  <stop offset="100%" stopColor="#1d5a3e" stopOpacity={0.03} />
+                  <stop offset="0%" stopColor="#95efc1" stopOpacity={0.28} />
+                  <stop offset="100%" stopColor="#95efc1" stopOpacity={0.03} />
                 </linearGradient>
                 <linearGradient id="rank2Fill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#12c98d" stopOpacity={0.24} />
                   <stop offset="100%" stopColor="#12c98d" stopOpacity={0.03} />
                 </linearGradient>
                 <linearGradient id="rank3Fill" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#c45c26" stopOpacity={0.22} />
-                  <stop offset="100%" stopColor="#c45c26" stopOpacity={0.03} />
+                  <stop offset="0%" stopColor="#d6b77b" stopOpacity={0.22} />
+                  <stop offset="100%" stopColor="#d6b77b" stopOpacity={0.03} />
                 </linearGradient>
               </defs>
               <CartesianGrid
-                stroke="#d9d0c1"
+                stroke="#344c43"
                 strokeDasharray="4 8"
                 vertical={false}
               />
               <XAxis
                 dataKey="month"
-                tick={{ fill: "#5a6b61", fontSize: 12 }}
+                tick={{ fill: "#adbcba", fontSize: 12 }}
                 tickLine={false}
-                axisLine={{ stroke: "#d9d0c1" }}
+                axisLine={{ stroke: "#344c43" }}
               />
               <YAxis
                 tickFormatter={(value: number) =>
                   AUD.format(value).replace("A$", "$")
                 }
-                tick={{ fill: "#5a6b61", fontSize: 12 }}
+                tick={{ fill: "#adbcba", fontSize: 12 }}
                 tickLine={false}
                 axisLine={false}
                 width={64}
@@ -136,7 +131,7 @@ export function IncomeMilestonesChart({ matches }: IncomeMilestonesChartProps) {
               />
               <Tooltip
                 content={ChartTooltip}
-                cursor={{ stroke: "#c45c26", strokeOpacity: 0.35 }}
+                cursor={{ stroke: "#d6b77b", strokeOpacity: 0.35 }}
               />
               {series.map((item) => (
                 <Area
