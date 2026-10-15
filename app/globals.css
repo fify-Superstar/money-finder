@@ -265,7 +265,10 @@ footer {
 }
 @media (max-width: 639px) {
   .premium-home {
-    padding-bottom: 96px;
+    padding-bottom: 24px;
+  }
+  body:has(.premium-home) footer {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
   }
   .mobile-purchase-bar {
     display: flex;
