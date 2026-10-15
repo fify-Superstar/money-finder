@@ -1,7 +1,10 @@
 import Stripe from "stripe";
 import { isCheckoutSessionId } from "./sessionId.ts";
 
-export { CHECKOUT_SESSION_ID_PATTERN, isCheckoutSessionId } from "./sessionId.ts";
+export {
+  CHECKOUT_SESSION_ID_PATTERN,
+  isCheckoutSessionId,
+} from "./sessionId.ts";
 
 /** Paid access is granted for either product tier, in AUD only. */
 export const STANDARD_AMOUNT_CENTS = 4700;
@@ -82,6 +85,9 @@ export function createStripeSessionLookup(
   return {
     async retrieve(sessionId: string) {
       const session = await stripe.checkout.sessions.retrieve(sessionId);
+      if (env.NODE_ENV === "production" && !session.livemode) {
+        throw new Error("Live paid access requires a live Stripe checkout");
+      }
       return {
         id: session.id,
         status: session.status,
@@ -117,7 +123,9 @@ function paidAtFromSession(session: CheckoutSessionSnapshot): string {
 }
 
 export function isExpectedPaidPrice(session: CheckoutSessionSnapshot): boolean {
-  return classifyPaidProductTier(session.amount_total, session.currency) !== null;
+  return (
+    classifyPaidProductTier(session.amount_total, session.currency) !== null
+  );
 }
 
 export async function verifyPaidCheckoutSession(

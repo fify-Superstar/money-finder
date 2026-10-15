@@ -87,6 +87,7 @@ export function SiteHeader({ startHref, paymentLinked }: SiteHeaderProps) {
                     }
                   >
                     <Link
+                      prefetch={false}
                       href={item.href}
                       className={cn(
                         "inline-flex min-h-11 items-center",

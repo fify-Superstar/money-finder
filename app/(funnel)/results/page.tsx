@@ -1,3 +1,4 @@
+import { PaidAccessBoundary } from "@/components/payment/PaidAccessBoundary";
 import { requirePaidAccess } from "@/lib/payment/requirePaidAccess";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -19,7 +20,9 @@ export default async function ResultsPage() {
         title="Your Money Map"
         description="Your Top 3, why each one fits, and the first moves to make."
       />
-      <ResultsWorkspace />
+      <PaidAccessBoundary>
+        <ResultsWorkspace />
+      </PaidAccessBoundary>
     </Container>
   );
 }

@@ -1,3 +1,4 @@
+import { PaidAccessBoundary } from "@/components/payment/PaidAccessBoundary";
 import { requirePaidAccess } from "@/lib/payment/requirePaidAccess";
 import type { Metadata } from "next";
 import { AssessmentWorkspace } from "@/components/assessment/AssessmentWorkspace";
@@ -24,7 +25,9 @@ export default async function AssessmentPage() {
             : "Twelve focused questions. This is an unpaid private demo. Results are personalised matches, not a guarantee of income."
         }
       />
-      <AssessmentWorkspace />
+      <PaidAccessBoundary>
+        <AssessmentWorkspace />
+      </PaidAccessBoundary>
     </Container>
   );
 }

@@ -1,3 +1,4 @@
+import { PaymentClickTracker } from "@/components/marketing/PaymentClickTracker";
 import { exampleMatches } from "@/lib/marketing/exampleMap";
 import { Container } from "@/components/layout/Container";
 import { PricingTiers } from "@/components/marketing/PricingTiers";
@@ -6,6 +7,16 @@ import { ShareMoneyMapCta } from "@/components/share/ShareMoneyMapCta";
 import { Button } from "@/components/ui/Button";
 
 const faqs = [
+  {
+    question: "Why pay when I can find income ideas for free?",
+    answer:
+      "You are paying for structured matching around your own answers: your available time, starting budget, skills, preferences and goals. Money Finder ranks your Top 3, explains the fit and gives practical first actions, so you have a focused starting point rather than another long list of ideas.",
+  },
+  {
+    question: "What happens after I pay?",
+    answer:
+      "Stripe confirms your payment, then you complete the 12-question assessment. The automated Money Map shows your ranked matches, scores, explanations and first actions. Premium adds a human review and a tailored first-month plan. Keep your checkout confirmation link so you can return on the same browser.",
+  },
   {
     question: "What is Money Finder?",
     answer:
@@ -78,22 +89,25 @@ export function HomePage({
                 practical steps to begin.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button href="#pricing" size="lg">
-                  Find my Money Map{" "}
-                  <span aria-hidden="true" className="ml-3">
-                    ↗
-                  </span>
-                </Button>
+                <PaymentClickTracker tier="standard" location="homepage_hero">
+                  <Button href={standardHref} size="lg">
+                    Get my Money Map — A$47 ↗
+                  </Button>
+                </PaymentClickTracker>
                 <Button href="#example" variant="secondary" size="lg">
                   Explore an example
                 </Button>
               </div>
               <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted">
-                <span>12 focused questions</span>
-                <span>Built around your situation</span>
+                <span>Secure Stripe checkout</span>
                 <span>One-time payment</span>
+                <span>No subscription</span>
               </div>
-              <p className="mt-5 text-xs text-muted">
+              <p className="mt-5 text-sm leading-relaxed text-muted">
+                After checkout: answer 12 questions, discover your Top 3, and
+                explore your first actions.
+              </p>
+              <p className="mt-3 text-xs text-muted">
                 Ranked fits, not a promise of income.
               </p>
             </div>
@@ -394,9 +408,11 @@ export function HomePage({
             Twelve questions. Your personalised Top 3. Practical first moves.
           </p>
           <div className="mt-7">
-            <Button href="#pricing" size="lg">
-              Find my Money Map ↗
-            </Button>
+            <PaymentClickTracker tier="standard" location="homepage_closing">
+              <Button href={standardHref} size="lg">
+                Get my Money Map — A$47 ↗
+              </Button>
+            </PaymentClickTracker>
           </div>
           <p className="mt-5 text-xs text-muted">
             One-time payment · Ranked fits, not a promise of income.
@@ -406,6 +422,17 @@ export function HomePage({
           <ShareMoneyMapCta />
         </div>
       </Container>
+      <div className="mobile-purchase-bar" aria-label="Get your Money Map">
+        <div>
+          <p className="text-sm font-medium">Your personalised Top 3</p>
+          <p className="mt-1 text-xs text-muted">A$47 once · no subscription</p>
+        </div>
+        <PaymentClickTracker tier="standard" location="mobile_purchase_bar">
+          <Button href={standardHref} size="sm">
+            Get my map ↗
+          </Button>
+        </PaymentClickTracker>
+      </div>
     </div>
   );
 }
