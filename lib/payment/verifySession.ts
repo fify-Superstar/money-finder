@@ -38,6 +38,7 @@ export type VerifiedPayment = {
   sessionId: string;
   email: string | null;
   paidAt: string;
+  amountTotal?: number;
 };
 
 export type SessionVerificationResult =
@@ -165,6 +166,7 @@ export async function verifyPaidCheckoutSession(
       sessionId: session.id,
       email: emailFromSession(session),
       paidAt: paidAtFromSession(session),
+      amountTotal: session.amount_total ?? undefined,
     },
   };
 }

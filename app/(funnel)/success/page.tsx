@@ -1,3 +1,6 @@
+import { createHash } from "node:crypto";
+import { PurchaseTracker } from "@/components/marketing/PurchaseTracker";
+import { verifyPaidCheckoutSession } from "@/lib/payment/verifySession";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -24,6 +27,10 @@ type SuccessSearchParams = Promise<{
   session_id?: string | string[];
   error?: string | string[];
 }>;
+
+function isFreshReturn(issuedAt: number) {
+  return Date.now() - issuedAt < 24 * 60 * 60 * 1000;
+}
 
 function firstParam(value: string | string[] | undefined): string | undefined {
   if (Array.isArray(value)) {
@@ -81,8 +88,16 @@ export default async function SuccessPage({
   }
 
   if (access) {
+    // Only fresh, Stripe-verified returns generate revenue analytics.
+    const payment = isFreshReturn(access.issuedAt)
+      ? await verifyPaidCheckoutSession(access.sessionId)
+      : null;
+    const purchase = payment?.ok && payment.payment.amountTotal
+      ? { transactionId: createHash("sha256").update(payment.payment.sessionId).digest("hex"), value: payment.payment.amountTotal / 100 }
+      : null;
     return (
       <Container className="py-12 sm:py-16">
+        {purchase && <PurchaseTracker {...purchase} />}
         <PageHeader
           eyebrow="Money Finder"
           title="Payment confirmed"
