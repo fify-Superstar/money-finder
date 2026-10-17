@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Newsreader, Outfit } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -62,6 +63,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SiteFooter paymentLinked={paymentLinked} />
         </div>
         <Analytics />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-4BR3XEQRF0"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-4BR3XEQRF0');
+          `}
+        </Script>
       </body>
     </html>
   );
