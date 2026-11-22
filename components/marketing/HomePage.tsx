@@ -77,23 +77,21 @@ export function HomePage({
                 YOUR POTENTIAL. A CLEARER DIRECTION.
               </p>
               <h1 className="mt-6 text-5xl font-medium leading-[1.06] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
-                Your next income move.
-                <br />
+                Find your top 3 income ideas,{" "}
                 <span className="font-display italic text-mint-glow">
-                  Made personal.
+                  matched to you.
                 </span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-                Turn your skills, time and starting budget into a personalised
-                Top 3 of income opportunities — with reasons they fit and
-                practical steps to begin.
+                Pay A$47 once through secure Stripe checkout, then answer 12
+                questions about your skills, time, budget and goals to get your
+                personalised Top 3, with match scores, the reasons each one
+                fits, and practical first actions.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <PaymentClickTracker tier="standard" location="homepage_hero">
-                  <Button href={standardHref} size="lg">
-                    Get my Money Map — A$47 ↗
-                  </Button>
-                </PaymentClickTracker>
+                <Button href="#pricing" size="lg">
+                  Get my Money Map
+                </Button>
                 <Button href="#example" variant="secondary" size="lg">
                   Explore an example
                 </Button>
