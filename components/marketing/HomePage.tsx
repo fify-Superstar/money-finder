@@ -69,25 +69,25 @@ export function HomePage({
     <div className="premium-home">
       <ReferralCapture />
       <section className="premium-hero">
-        <Container className="relative pt-3 pb-12 min-[390px]:pt-6 sm:py-20 lg:py-24">
+        <Container className="relative pt-6 pb-16 sm:py-20 lg:py-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
             <div>
               <p className="premium-eyebrow">
                 <span className="inline-block h-2 w-2 rounded-full bg-mint" />{" "}
                 YOUR POTENTIAL. A CLEARER DIRECTION.
               </p>
-              <h1 className="mt-2 text-xl font-medium leading-[1.06] tracking-[-0.045em] min-[390px]:mt-4 min-[390px]:text-5xl sm:mt-6 sm:text-6xl sm:leading-[1.06] lg:text-7xl">
+              <h1 className="mt-4 text-[clamp(1.875rem,8.5vw,3rem)] font-medium leading-[1.06] tracking-[-0.045em] sm:mt-6 sm:text-6xl lg:text-7xl">
                 Find your top 3 income ideas,{" "}
                 <span className="font-display italic text-mint-glow">
                   matched to you.
                 </span>
               </h1>
-              <p className="mt-2 max-w-xl text-lg leading-relaxed text-muted min-[390px]:mt-6">
+              <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted sm:mt-6">
                 Pay A$47 once, then answer 12 questions. Your personalised
                 Money Map shows your top three matches, why they fit, and how
                 to get started.
               </p>
-              <div className="mt-3 flex flex-wrap gap-3 min-[390px]:mt-6 sm:mt-8">
+              <div className="mt-5 flex flex-wrap gap-3 sm:mt-8">
                 <Button href="#pricing" size="lg">
                   Get my Money Map
                 </Button>
